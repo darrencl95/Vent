@@ -20,9 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pingus.vent.R;
 import com.pingus.vent.Model.User;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
