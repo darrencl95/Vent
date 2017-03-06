@@ -50,10 +50,10 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Log.d("Pickup", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d("Vent", "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
-                    Log.d("Pickup", "onAuthStateChanged:signed_out");
+                    Log.d("Vent", "onAuthStateChanged:signed_out");
                 }
             }
         };
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Pickup", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        Log.d("Vent", "createUserWithEmail:onComplete:" + task.isSuccessful());
 
                         if (task.isSuccessful()) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -117,11 +117,11 @@ public class LoginActivity extends AppCompatActivity {
                                 User u = new User("trollmaster6969","Alexandre","Locquet");
                                 myRef.setValue(u);
                             }
-                            Toast.makeText(getBaseContext(), "Authentication succeeded",
+                            Toast.makeText(getBaseContext(), "Registration succeeded",
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d("Firebase",task.getException().getMessage().toString());
-                            Toast.makeText(getBaseContext(), "Authentication failed",
+                            Toast.makeText(getBaseContext(), "Registration failed",
                                     Toast.LENGTH_SHORT).show();
                         }
 
