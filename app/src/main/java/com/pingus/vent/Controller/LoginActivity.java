@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private Button loginBtn;
     private Button registerBtn;
-    private TextView textViewForgot;
+    private ImageView logo;
 
 
     @Override
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         loginBtn = (Button) findViewById(R.id.buttonLogin);
         registerBtn = (Button) findViewById(R.id.registerButton);
+        logo = (ImageView) findViewById(R.id.logopic);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
