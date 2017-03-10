@@ -1,0 +1,73 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pingus.vent.Controller.FriendlistActivity">
+
+    <android.support.constraint.Guideline
+        android:layout_width="320dp"
+        android:layout_height="0dp"
+        android:id="@+id/h_guideline1"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="22dp"
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintGuide_percent="0.043222003"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/h_guideline2"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="156dp"
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintGuide_percent="0.3068783"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="509dp"
+        android:id="@+id/v_guideline1"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="509dp"
+        android:id="@+id/v_guideline2"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="32000dp"
+        app:layout_constraintGuide_percent="100.0"/>
+
+
+    <TextView
+        android:text="Friend's List"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        app:layout_constraintLeft_toLeftOf="@+id/v_guideline1"
+        app:layout_constraintRight_toLeftOf="@+id/v_guideline2"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/h_guideline1"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:listSelector="@drawable/list_selector"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"
+        app:layout_constraintLeft_toLeftOf="@+id/v_guideline1"
+        android:layout_marginTop="16dp"
+        app:layout_constraintVertical_bias="0.57" />
+</android.support.constraint.ConstraintLayout>
