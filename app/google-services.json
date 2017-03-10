@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "135989405336",
+    "firebase_url": "https://vent-6f428.firebaseio.com",
+    "project_id": "vent-6f428",
+    "storage_bucket": "vent-6f428.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135989405336:android:7151052b310f9e83",
+        "android_client_info": {
+          "package_name": "com.pingus.vent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135989405336-fs5torrmoff7qftpnlacc38eigqqb27t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pingus.vent",
+            "certificate_hash": "02316b90cfe59b5ce33343bb5f645ae4d38b89f3"
+          }
+        },
+        {
+          "client_id": "135989405336-slc0nvtik0md3aottt9m8rstb2hnrh4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxAtn00aZiYsW_1K8YIBy1Eu-72e16yFg"
+        },
+        {
+          "current_key": "AIzaSyC3Wchakq6sM12aSAg9vQbgLF_pwpRDfYQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135989405336-slc0nvtik0md3aottt9m8rstb2hnrh4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
