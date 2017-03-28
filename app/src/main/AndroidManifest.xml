@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.FriendlistActivity"></activity>
+        <activity android:name=".Controller.FriendlistActivity" />
+        <activity android:name=".Controller.MainActivity" />
     </application>
+
 </manifest>
