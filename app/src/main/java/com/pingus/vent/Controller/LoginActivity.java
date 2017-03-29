@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(getBaseContext(), "Authentication succeeded",
                                     Toast.LENGTH_SHORT).show();
-                            Intent homePage = new Intent(getBaseContext(),FriendlistActivity.class);
+                            Intent homePage = new Intent(getBaseContext(),MainActivity.class);
                             startActivity(homePage);
                         } else {
                             Log.w("Pickup", "signInWithEmail:failed", task.getException());
