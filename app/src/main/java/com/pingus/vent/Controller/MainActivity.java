@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View navHeader;
+    private ImageView imgNavHeaderBg;
     private TextView txtName;
     private Toolbar toolbar;
     private FloatingActionButton fab;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_SETTINGS = "profile and settings";
     public static String CURRENT_TAG = TAG_HOME;
+
+    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
+    //private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
 
     // toolbar titles respected to selected nav menu item
     private String[] activityTitles;
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // Navigation view header
         navHeader = navigationView.getHeaderView(0);
         txtName = (TextView) navHeader.findViewById(R.id.name);
+        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
@@ -113,8 +118,12 @@ public class MainActivity extends AppCompatActivity {
         // name, website
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        txtName.setText(user.getDisplayName());
-
+        txtName.setText(user.getUid());
+        // loading header background image
+        Glide.with(this).load(urlNavHeaderBg)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgNavHeaderBg);
         // showing dot next to notifications label
         navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
     }
@@ -338,7 +347,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            Toast.makeText(getApplicationContext(), "Logout user!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Logged out!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this.getBaseContext(),LoginActivity.class);
+            startActivity(intent);
             return true;
         }
 
