@@ -28,7 +28,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pingus.vent.Model.HomeFragment;
 import com.pingus.vent.Model.NotebookFragment;
 import com.pingus.vent.Model.NotificationsFragment;
-import com.pingus.vent.Model.ChatroomFragment;
 import com.pingus.vent.Model.SettingsFragment;
 import com.pingus.vent.Controller.CircleTransform;
 

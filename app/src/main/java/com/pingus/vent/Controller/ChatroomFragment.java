@@ -1,13 +1,24 @@
-package com.pingus.vent.Model;
+package com.pingus.vent.Controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.pingus.vent.Model.ChatGroup;
 import com.pingus.vent.R;
+
+import static android.R.attr.fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +65,7 @@ public class ChatroomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -63,8 +75,29 @@ public class ChatroomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_chatroom, container, false);
+
+        ChatGroup[] items = {new ChatGroup("Depression"), new ChatGroup("Anxiety"), new ChatGroup("School"), new ChatGroup("Misc")};
+
+        //create list of chat rooms
+        ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
+        ArrayAdapter<ChatGroup> lvAdapter = new ArrayAdapter<ChatGroup>(
+          getActivity(), android.R.layout.simple_list_item_1, items
+        );
+        listView.setAdapter(lvAdapter);
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header, listView, false);
+        listView.addHeaderView(header);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ChatGroup entry = (ChatGroup) parent.getAdapter().getItem(position);
+                Toast.makeText(getContext(), "You clicked: " + entry, Toast.LENGTH_SHORT).show();
+               // Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
+              //  startActivity(nextScreen);
+         }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_photos, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
