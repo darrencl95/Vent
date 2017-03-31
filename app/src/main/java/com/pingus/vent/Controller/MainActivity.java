@@ -21,15 +21,9 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.pingus.vent.Model.HomeFragment;
-import com.pingus.vent.Model.NotebookFragment;
-import com.pingus.vent.Model.NotificationsFragment;
-import com.pingus.vent.Model.SettingsFragment;
-import com.pingus.vent.Controller.CircleTransform;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.pingus.vent.Model;
+package com.pingus.vent.Controller;
 
 import android.content.Context;
 import android.net.Uri;
