@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     public void register(View view) {
@@ -62,6 +64,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         if (!password.equals(editTextPassword2.getText().toString())) {
             Toast.makeText(getBaseContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String username = editTextUsername.getText().toString().trim();
+        if (username.isEmpty() || username.length() < 4) {
+            Toast.makeText(getBaseContext(), "Username too short", Toast.LENGTH_SHORT).show();
             return;
         }
         createAccount(email, password);

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -68,7 +69,6 @@ public class ChatroomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -89,7 +89,7 @@ public class ChatroomFragment extends Fragment {
         );
         listView.setAdapter(lvAdapter);
         ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header, listView, false);
-        listView.addHeaderView(header);
+        listView.addHeaderView(header, "Header", false);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +97,6 @@ public class ChatroomFragment extends Fragment {
                 if (entry == null) {
                     return;
                 }
-                Toast.makeText(getContext(), "You clicked: " + entry, Toast.LENGTH_SHORT).show();
                Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
                startActivity(nextScreen);
          }

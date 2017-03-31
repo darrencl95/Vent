@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -25,6 +26,17 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.AppBarLayout>
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="Registration"
+            android:textAlignment="center"
+            android:textSize="@dimen/action_bar_stacked_max_height" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -84,16 +96,6 @@
             android:text="Register"
             />
 
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="Registration"
-            android:textAlignment="center"
-            android:textSize="@dimen/action_bar_stacked_max_height" />
 
     </RelativeLayout>
 
