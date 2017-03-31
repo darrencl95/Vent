@@ -89,26 +89,10 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = editTextEmail.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
-                if(email.equals("") || password.equals("")) {
-                    Toast.makeText(getBaseContext(),"Invalid Username or Password",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!CredentialVerification.verifyEmail(email)) {
-                    Toast.makeText(getBaseContext(), "Invalid Email",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String message = CredentialVerification.verifyPassword(password);
-                if (!message.isEmpty()) {
-                    Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                createAccount(email, password);
+                Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
+                startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -125,31 +109,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void createAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Vent", "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            if (user != null) {
-                                DatabaseReference myRef = database.getReference(user.getUid());
-                                User u = new User("trollmaster6969","Alexandre","Locquet");
-                                myRef.setValue(u);
-                            }
-                            Toast.makeText(getBaseContext(), "Registration succeeded",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d("Firebase",task.getException().getMessage().toString());
-                            Toast.makeText(getBaseContext(), "Registration failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        // ...
-                    }
-                });
-    }
 
     private void signIn(String email, String password) {
         if(email.equals("") || password.equals("")) {

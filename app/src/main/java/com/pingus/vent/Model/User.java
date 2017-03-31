@@ -7,47 +7,20 @@ package com.pingus.vent.Model;
 public class User {
 
     // implement user image
-    private String displayName;
-    private String firstName;
-    private String lastName;
-    private String userType;
+    private String userName;
+    private String imagePath;
 
-    public User(String user, String first, String last) {
-        displayName = user;
-        firstName = first;
-        lastName = last;
-        userType = "user";
+    public User(String userName) {
+        this.userName = userName;
+        imagePath = "";
     }
-
-    public String getUsername() {
-        return displayName;
+    public String getUserName() {
+        return userName;
     }
-
-    public void setUsername(String username) {
-        this.displayName = username;
+    public String getImagePath() {
+        return imagePath;
     }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setImagePath(String path) {
+        imagePath = path;
     }
 }
