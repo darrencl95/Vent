@@ -82,9 +82,9 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user != null) {
-                                DatabaseReference myRef = database.getReference(user.getUid());
+                                DatabaseReference myRef = database.getInstance().getReference();
                                 User u = new User(editTextUsername.getText().toString().trim());
-                                myRef.setValue(u);
+                                myRef.child("users").child(user.getUid()).setValue(u);
                             }
                             Toast.makeText(getBaseContext(), "Registration succeeded",
                                     Toast.LENGTH_SHORT).show();

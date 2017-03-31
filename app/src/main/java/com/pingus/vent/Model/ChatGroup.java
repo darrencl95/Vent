@@ -6,8 +6,13 @@ package com.pingus.vent.Model;
 
 public class ChatGroup {
     private String name;
-    public ChatGroup(String name) {
+    private ChatType type;
+    public ChatGroup() {
+
+    }
+    public ChatGroup(String name, ChatType type) {
         this.name = name;
+        this.type = type;
     }
     public String getName() {
         return name;
@@ -16,4 +21,9 @@ public class ChatGroup {
     public String toString() {
         return name;
     }
+
+    public ChatType getType() {
+        return type;
+    }
+
 }

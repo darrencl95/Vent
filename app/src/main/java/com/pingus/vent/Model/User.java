@@ -9,7 +9,9 @@ public class User {
     // implement user image
     private String userName;
     private String imagePath;
+    public User() {
 
+    }
     public User(String userName) {
         this.userName = userName;
         imagePath = "";
