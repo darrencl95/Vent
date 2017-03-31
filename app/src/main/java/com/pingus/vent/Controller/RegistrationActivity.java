@@ -1,5 +1,6 @@
 package com.pingus.vent.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
 
@@ -27,6 +29,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextPassword2;
     private EditText editTextUsername;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextPassword2 = (EditText) findViewById(R.id.editTextPassword2);
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
     }
 
     public void register(View view) {
@@ -73,7 +77,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user != null) {
                                 DatabaseReference myRef = database.getReference(user.getUid());
-                                User u = new User("trollmaster6969","Alexandre","Locquet");
+                                User u = new User(editTextUsername.getText().toString().trim());
                                 myRef.setValue(u);
                             }
                             Toast.makeText(getBaseContext(), "Registration succeeded",
@@ -82,8 +86,8 @@ public class RegistrationActivity extends AppCompatActivity {
                             Log.d("Firebase",task.getException().getMessage().toString());
                             Toast.makeText(getBaseContext(), "Registration failed",
                                     Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                        // ...
                     }
                 });
     }
