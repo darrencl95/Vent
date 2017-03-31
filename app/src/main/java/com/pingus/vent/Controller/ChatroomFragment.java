@@ -15,6 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.pingus.vent.Model.ChatGroup;
 import com.pingus.vent.R;
 
@@ -91,9 +94,12 @@ public class ChatroomFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ChatGroup entry = (ChatGroup) parent.getAdapter().getItem(position);
+                if (entry == null) {
+                    return;
+                }
                 Toast.makeText(getContext(), "You clicked: " + entry, Toast.LENGTH_SHORT).show();
-               // Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
-              //  startActivity(nextScreen);
+               Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
+               startActivity(nextScreen);
          }
         });
         // Inflate the layout for this fragment
