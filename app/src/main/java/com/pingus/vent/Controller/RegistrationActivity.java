@@ -61,12 +61,11 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
         if (!password.equals(editTextPassword2.getText().toString())) {
-            Toast.makeText(getBaseContext(), "Passwords don't match", Toast.LENGTH_SHORT);
+            Toast.makeText(getBaseContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();
             return;
         }
         createAccount(email, password);
     }
-}
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -82,6 +81,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
                             Toast.makeText(getBaseContext(), "Registration succeeded",
                                     Toast.LENGTH_SHORT).show();
+                            RegistrationActivity.super.onBackPressed();
                         } else {
                             Log.d("Firebase",task.getException().getMessage().toString());
                             Toast.makeText(getBaseContext(), "Registration failed",
@@ -91,3 +91,4 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                 });
     }
+}
