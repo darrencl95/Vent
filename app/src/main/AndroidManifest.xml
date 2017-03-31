@@ -21,8 +21,11 @@
         <activity
             android:name=".Controller.ChatroomActivity"
             android:label="@string/title_activity_chatroom"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Controller.RegistrationActivity"
+            android:label="@string/title_activity_registration"
             android:theme="@style/AppTheme"></activity>
-
     </application>
 
 </manifest>
