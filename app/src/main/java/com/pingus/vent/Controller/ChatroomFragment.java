@@ -134,9 +134,6 @@ public class ChatroomFragment extends Fragment {
 
         //setup chatroom database
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist");
-        for (ChatGroup cg: chatItems) {
-            database.push().setValue(cg);
-        }
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
