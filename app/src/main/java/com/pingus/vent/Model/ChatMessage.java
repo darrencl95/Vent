@@ -11,11 +11,12 @@ public class ChatMessage {
     private String messageText;
     private String messageUser;
     private long messageTime;
+    private boolean left;
 
     public ChatMessage(String messageText, String messageUser) {
         this.messageText = messageText;
         this.messageUser = messageUser;
-
+        left = true;
         // Initialize to current time
         messageTime = new Date().getTime();
     }
@@ -51,5 +52,11 @@ public class ChatMessage {
     @Override
     public String toString() {
         return messageUser + ": " + messageText;
+    }
+    public void setLeft(boolean isLeft) {
+        left = isLeft;
+    }
+    public boolean isLeft() {
+        return left;
     }
 }
