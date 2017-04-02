@@ -13,6 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Controller.ChatroomActivity;
 import com.pingus.vent.R;
 
@@ -27,8 +32,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     private TextView userText;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     private Context context;
-    private boolean left;
-
+    private String username;
     @Override
     public void add(ChatMessage object) {
         chatMessageList.add(object);
@@ -52,7 +56,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         ChatMessage chatMessageObj = getItem(position);
         View row = convertView;
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(chatMessageObj.isLeft()) {
+        if(!chatMessageObj.getMessageUser().equals(username)) {
             row = inflater.inflate(R.layout.message_left, parent, false);
         } else {
             row = inflater.inflate(R.layout.message_right, parent, false);
@@ -63,7 +67,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         userText.setText(chatMessageObj.getMessageUser());
         return row;
     }
-    public void setLeft(boolean isLeft) {
-        left = isLeft;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

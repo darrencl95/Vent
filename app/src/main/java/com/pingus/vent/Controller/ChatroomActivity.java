@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -52,7 +53,6 @@ public class ChatroomActivity extends AppCompatActivity {
         messageList.setDivider(null);
         messageList.setDividerHeight(0);
         lvAdapter = new ChatArrayAdapter(this, R.layout.message_left);
-        messageList.setAdapter(lvAdapter);
         setTitle(getIntent().getStringExtra("CHATROOM_NAME"));
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -60,6 +60,8 @@ public class ChatroomActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = (String) dataSnapshot.getValue();
+                lvAdapter.setUsername(userName);
+                lvAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -67,6 +69,8 @@ public class ChatroomActivity extends AppCompatActivity {
 
             }
         });
+        messageList.setAdapter(lvAdapter);
+        messageList.setVisibility(View.VISIBLE);
         database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
