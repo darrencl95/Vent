@@ -1,25 +1,46 @@
 package com.pingus.vent.Controller;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.ChatGroup;
+import com.pingus.vent.Model.ChatType;
 import com.pingus.vent.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import static android.R.attr.fragment;
 
@@ -40,8 +61,13 @@ public class ChatroomFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String name;
 
     private OnFragmentInteractionListener mListener;
+
+    private DatabaseReference database;
+
+    private ArrayList<ChatGroup> chatItems;
 
     public ChatroomFragment() {
         // Required empty public constructor
@@ -68,7 +94,6 @@ public class ChatroomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -79,17 +104,18 @@ public class ChatroomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chatroom, container, false);
-
-        ChatGroup[] items = {new ChatGroup("Depression"), new ChatGroup("Anxiety"), new ChatGroup("School"), new ChatGroup("Misc")};
-
+        setHasOptionsMenu(true);
+        chatItems = new ArrayList<>();
         //create list of chat rooms
         ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
-        ArrayAdapter<ChatGroup> lvAdapter = new ArrayAdapter<ChatGroup>(
-          getActivity(), android.R.layout.simple_list_item_1, items
+        final ArrayAdapter<ChatGroup> lvAdapter = new ArrayAdapter<ChatGroup>(
+          getActivity(), android.R.layout.simple_list_item_1, chatItems
         );
         listView.setAdapter(lvAdapter);
         ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header, listView, false);
-        listView.addHeaderView(header);
+        listView.addHeaderView(header, "Header", false);
+
+        //list view reacts to item clicks and takes user to new chat room
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -97,22 +123,67 @@ public class ChatroomFragment extends Fragment {
                 if (entry == null) {
                     return;
                 }
-                Toast.makeText(getContext(), "You clicked: " + entry, Toast.LENGTH_SHORT).show();
                Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
+               nextScreen.putExtra("CHATROOM_NAME", entry.toString());
                startActivity(nextScreen);
          }
+        });
+
+        //setup chatroom database
+        database = FirebaseDatabase.getInstance().getReference().child("chatroomlist");
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Set<ChatGroup> set = new HashSet<ChatGroup>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    set.add(snapshot.getValue(ChatGroup.class));
+                    database.getRoot().push().setValue(snapshot.getValue(ChatGroup.class).toString());
+                }
+                chatItems.clear();
+                chatItems.addAll(set);
+                lvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
         // Inflate the layout for this fragment
         return view;
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    public void addRoom(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.LightDialogTheme);
+        builder.setTitle("Enter room name");
+        final EditText  inputField = new EditText(getActivity());
+        builder.setView(inputField);
+        builder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                name = inputField.getText().toString().trim();
+                ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED);
+                database.push().setValue(newCG);
+                database.getParent().push().setValue(newCG.toString());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
-
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_chatroom_drawer, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        addRoom(getView());
+        return true;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
