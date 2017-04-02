@@ -67,7 +67,7 @@ public class ChatroomFragment extends Fragment {
 
     private DatabaseReference database;
 
-    private ArrayList<ChatGroup> chatItems;
+    private ArrayList<String> chatItems;
 
     public ChatroomFragment() {
         // Required empty public constructor
@@ -108,7 +108,7 @@ public class ChatroomFragment extends Fragment {
         chatItems = new ArrayList<>();
         //create list of chat rooms
         ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
-        final ArrayAdapter<ChatGroup> lvAdapter = new ArrayAdapter<ChatGroup>(
+        final ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
           getActivity(), android.R.layout.simple_list_item_1, chatItems
         );
         listView.setAdapter(lvAdapter);
@@ -119,12 +119,12 @@ public class ChatroomFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ChatGroup entry = (ChatGroup) parent.getAdapter().getItem(position);
+                String entry = (String) parent.getAdapter().getItem(position);
                 if (entry == null) {
                     return;
                 }
                Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
-               nextScreen.putExtra("CHATROOM_NAME", entry.toString());
+               nextScreen.putExtra("CHATROOM_NAME", entry);
                startActivity(nextScreen);
          }
         });
@@ -134,10 +134,9 @@ public class ChatroomFragment extends Fragment {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Set<ChatGroup> set = new HashSet<ChatGroup>();
+                Set<String> set = new HashSet<String>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    set.add(snapshot.getValue(ChatGroup.class));
-                    database.getRoot().push().setValue(snapshot.getValue(ChatGroup.class).toString());
+                    set.add((String)snapshot.getKey());
                 }
                 chatItems.clear();
                 chatItems.addAll(set);
@@ -162,8 +161,8 @@ public class ChatroomFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 name = inputField.getText().toString().trim();
                 ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED);
-                database.push().setValue(newCG);
-                database.getParent().push().setValue(newCG.toString());
+                database.child(newCG.toString()).push().setValue(newCG);
+                database.child(newCG.toString()).push().setValue("messages");
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
