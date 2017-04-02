@@ -32,7 +32,7 @@
             android:id="@+id/messageEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName|textMultiLine"
+            android:inputType="textAutoComplete|textMultiLine"
             android:ems="14"
             android:hint="Message"
             android:gravity="bottom"

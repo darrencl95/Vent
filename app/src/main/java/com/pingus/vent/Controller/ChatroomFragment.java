@@ -151,7 +151,7 @@ public class ChatroomFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-    public void addRoom(View view) {
+    public void addRoom(final View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.LightDialogTheme);
         builder.setTitle("Enter room name");
         final EditText  inputField = new EditText(getActivity());
@@ -160,6 +160,10 @@ public class ChatroomFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 name = inputField.getText().toString().trim();
+                if(name.isEmpty()) {
+                    Toast.makeText(getContext(), "Chatroom name cannot be empty", Toast.LENGTH_SHORT).show();
+                    addRoom(view);
+                }
                 ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED);
                 database.child(newCG.toString()).push().setValue(newCG);
                 database.child(newCG.toString()).push().setValue("messages");

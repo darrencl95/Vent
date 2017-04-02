@@ -53,7 +53,6 @@ public class ChatroomActivity extends AppCompatActivity {
         messageList.setAdapter(lvAdapter);
         setTitle(getIntent().getStringExtra("CHATROOM_NAME"));
         database = FirebaseDatabase.getInstance().getReference().child(getIntent().getStringExtra("CHATROOM_NAME"));
-        Toast.makeText(this, database.getKey(), Toast.LENGTH_SHORT).show();
         user = FirebaseAuth.getInstance().getCurrentUser();
         database.getRoot().child("users").child(user.getUid()).child("userName").addValueEventListener(new ValueEventListener() {
             @Override
