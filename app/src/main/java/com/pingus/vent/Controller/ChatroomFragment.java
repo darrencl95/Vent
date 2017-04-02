@@ -105,11 +105,7 @@ public class ChatroomFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chatroom, container, false);
         setHasOptionsMenu(true);
-        ChatGroup[] items = {new ChatGroup("Depression", ChatType.PERMENANT),
-                new ChatGroup("Anxiety", ChatType.PERMENANT), new ChatGroup("School", ChatType.PERMENANT),
-                new ChatGroup("Misc", ChatType.PERMENANT)};
-        chatItems = new ArrayList<>(Arrays.asList(items));
-
+        chatItems = new ArrayList<>();
         //create list of chat rooms
         ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
         final ArrayAdapter<ChatGroup> lvAdapter = new ArrayAdapter<ChatGroup>(
@@ -128,6 +124,7 @@ public class ChatroomFragment extends Fragment {
                     return;
                 }
                Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
+               nextScreen.putExtra("CHATROOM_NAME", entry.toString());
                startActivity(nextScreen);
          }
         });
@@ -140,6 +137,7 @@ public class ChatroomFragment extends Fragment {
                 Set<ChatGroup> set = new HashSet<ChatGroup>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     set.add(snapshot.getValue(ChatGroup.class));
+                    database.getRoot().push().setValue(snapshot.getValue(ChatGroup.class).toString());
                 }
                 chatItems.clear();
                 chatItems.addAll(set);
@@ -151,7 +149,7 @@ public class ChatroomFragment extends Fragment {
 
             }
         });
-    // Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         return view;
     }
     public void addRoom(View view) {
@@ -162,9 +160,10 @@ public class ChatroomFragment extends Fragment {
         builder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), "HERE", Toast.LENGTH_SHORT).show();
                 name = inputField.getText().toString().trim();
-                database.push().setValue(new ChatGroup(name, ChatType.USER_CREATED));
+                ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED);
+                database.push().setValue(newCG);
+                database.getParent().push().setValue(newCG.toString());
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
