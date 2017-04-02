@@ -112,9 +112,6 @@ public class ChatroomActivity extends AppCompatActivity {
             return;
         }
         lvAdapter.add(cm);
-        if (!cm.getMessageUser().equals(userName)) {
-            cm.setLeft(true);
-        }
         lvAdapter.notifyDataSetChanged();
     }
 }
