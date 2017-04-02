@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.ChatGroup;
+import com.pingus.vent.Model.ChatArrayAdapter;
 import com.pingus.vent.Model.ChatMessage;
 import com.pingus.vent.R;
 
@@ -36,28 +38,30 @@ public class ChatroomActivity extends AppCompatActivity {
     private DatabaseReference database;
     private FirebaseUser user;
     private EditText messageText;
-    private ArrayList<ChatMessage> messages;
     private String userName;
     private ListView messageList;
+    private ChatArrayAdapter lvAdapter;
+    private boolean left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState);
+        left = true;
         setContentView(R.layout.activity_chatroom);
-        messages = new ArrayList<>();
         messageList = (ListView) findViewById(R.id.listChatRoom);
-        final ArrayAdapter<ChatMessage> lvAdapter = new ArrayAdapter<ChatMessage>(
-                this, android.R.layout.simple_list_item_1, messages
-        );
-        messageList.setAdapter(lvAdapter);
+        messageList.setDivider(null);
+        messageList.setDividerHeight(0);
+        lvAdapter = new ChatArrayAdapter(this, R.layout.message_left);
         setTitle(getIntent().getStringExtra("CHATROOM_NAME"));
-        database = FirebaseDatabase.getInstance().getReference().child(getIntent().getStringExtra("CHATROOM_NAME"));
+        database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         user = FirebaseAuth.getInstance().getCurrentUser();
         database.getRoot().child("users").child(user.getUid()).child("userName").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = (String) dataSnapshot.getValue();
+                lvAdapter.setUsername(userName);
+                lvAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -65,17 +69,17 @@ public class ChatroomActivity extends AppCompatActivity {
 
             }
         });
+        messageList.setAdapter(lvAdapter);
+        messageList.setVisibility(View.VISIBLE);
         database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 appendChatMessage(dataSnapshot);
-                lvAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 appendChatMessage(dataSnapshot);
-                lvAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -98,10 +102,16 @@ public class ChatroomActivity extends AppCompatActivity {
 
     public void send(View view) {
         ChatMessage message = new ChatMessage(messageText.getText().toString(), userName);
+        message.setLeft(false);
         database.push().setValue(message);
         messageText.setText("");
     }
     private void appendChatMessage(DataSnapshot dataSnapshot) {
-        messages.add(dataSnapshot.getValue(ChatMessage.class));
+        ChatMessage cm = dataSnapshot.getValue(ChatMessage.class);
+        if (cm == null) {
+            return;
+        }
+        lvAdapter.add(cm);
+        lvAdapter.notifyDataSetChanged();
     }
 }
