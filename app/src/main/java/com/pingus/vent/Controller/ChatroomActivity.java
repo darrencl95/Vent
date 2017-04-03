@@ -105,6 +105,9 @@ public class ChatroomActivity extends AppCompatActivity {
 
     public void send(View view) {
         ChatMessage message = new ChatMessage(messageText.getText().toString(), userName);
+        if(message.getMessageText().isEmpty()) {
+            return;
+        }
         message.setLeft(false);
         database.push().setValue(message);
         messageText.setText("");

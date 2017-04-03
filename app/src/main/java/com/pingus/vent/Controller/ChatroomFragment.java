@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -65,6 +66,8 @@ public class ChatroomFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private FloatingActionButton fab;
+
     private DatabaseReference database;
 
     private ArrayList<String> chatItems;
@@ -105,6 +108,14 @@ public class ChatroomFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chatroom, container, false);
         setHasOptionsMenu(true);
+
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRoom(v);
+            }
+        });
         chatItems = new ArrayList<>();
         //create list of chat rooms
         ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
@@ -125,7 +136,6 @@ public class ChatroomFragment extends Fragment {
                startActivity(nextScreen);
          }
         });
-
         //setup chatroom database
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist");
         database.addValueEventListener(new ValueEventListener() {
