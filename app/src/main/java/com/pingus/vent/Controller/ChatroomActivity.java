@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.ChatGroup;
 import com.pingus.vent.Model.ChatArrayAdapter;
 import com.pingus.vent.Model.ChatMessage;
+import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
 
 public class ChatroomActivity extends AppCompatActivity {
@@ -59,6 +60,9 @@ public class ChatroomActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = (String) dataSnapshot.getValue();
+                if (userName == null) {
+                    database.getRoot().child("users").child(user.getUid()).setValue(new User("no_username"));
+                }
                 lvAdapter.setUsername(userName);
                 lvAdapter.notifyDataSetChanged();
             }

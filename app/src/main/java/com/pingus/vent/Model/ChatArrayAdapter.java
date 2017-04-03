@@ -67,9 +67,6 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         } else {
             row = inflater.inflate(R.layout.message_right, parent, false);
         }
-        if (username == null) {
-            username = "no_username";
-        }
         //set username and message text
         chatText = (TextView) row.findViewById(R.id.msgr);
         chatText.setText(chatMessageObj.getMessageText());
