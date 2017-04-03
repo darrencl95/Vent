@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = editTextEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                email="awagner31@gatech.edu";
-                password="testPass1";
                 if(email.equals("") || password.equals("")) {
                     Toast.makeText(getBaseContext(),"Invalid Username or Password",Toast.LENGTH_SHORT).show();
                     return;
