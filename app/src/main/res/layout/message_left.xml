@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
             android:paddingLeft="25dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
@@ -36,10 +35,11 @@
 
         <TextView
             android:id="@+id/timeText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:paddingLeft="25dp"
+            android:paddingRight="10dp"
             android:paddingBottom="5dp"
             android:textColor="@color/grey"/>
     </LinearLayout>
