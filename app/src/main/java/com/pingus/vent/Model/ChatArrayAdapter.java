@@ -24,12 +24,14 @@ import com.pingus.vent.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
     private TextView chatText;
     private TextView userText;
+    private TextView dateText;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     private Context context;
     private String username;
@@ -65,6 +67,9 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         chatText.setText(chatMessageObj.getMessageText());
         userText = (TextView) row.findViewById(R.id.msgu);
         userText.setText(chatMessageObj.getMessageUser());
+        Date date = new Date(chatMessageObj.getMessageTime());
+        dateText = (TextView)row.findViewById(R.id.timeText);
+        dateText.setText(date.toString());
         return row;
     }
     public void setUsername(String username) {
