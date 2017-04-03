@@ -112,9 +112,6 @@ public class ChatroomFragment extends Fragment {
           getActivity(), android.R.layout.simple_list_item_1, chatItems
         );
         listView.setAdapter(lvAdapter);
-        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header, listView, false);
-        listView.addHeaderView(header, "Header", false);
-
         //list view reacts to item clicks and takes user to new chat room
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

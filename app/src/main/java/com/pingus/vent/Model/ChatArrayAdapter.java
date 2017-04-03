@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -80,13 +81,21 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         } else if (hour == 0) {
             hour = 12;
         }
+        //don't modify this lol
         if (curr.getDate() - date.getDate() >= 7) {
             time = time.substring(4, 10)+ ", " + hour + "" + time.substring(13, 16) + hr;
-        } else if (curr.getDay() - date.getDay() < 7 && curr.getDay() - date.getDay() > 0
-                || curr.getDay() - date.getDay() == 0 && curr.getHours() - date.getHours() >= 1) {
+        } else if ((curr.getDay() - date.getDay() < 7 && curr.getDay() - date.getDay() > 0)
+                || (curr.getDay() - date.getDay() == 0 && (curr.getHours() - date.getHours() > 1
+                || (curr.getMinutes() >= date.getMinutes() && curr.getHours() - date.getHours() > 0)))){
             time = time.substring(0, 3) + " " + hour + "" + time.substring(13, 16) + hr;
-        } else if (curr.getMinutes() - date.getMinutes() < 60 && curr.getMinutes() - date.getMinutes() >= 1) {
-            time = curr.getMinutes() - date.getMinutes() + " min";
+        } else if ((curr.getHours() - date.getHours() == 1 && curr.getMinutes() < date.getMinutes()
+                    && curr.getMinutes() + date.getMinutes() > 1) ||
+                    curr.getMinutes() - date.getMinutes() < 60 && curr.getMinutes() - date.getMinutes() >= 1) {
+            int min = curr.getMinutes() - date.getMinutes();
+            if (curr.getHours() > date.getHours()) {
+                min = 60 - date.getMinutes() + curr.getMinutes();
+            }
+            time = min + " min";
         } else if (curr.getMinutes() - date.getMinutes() < 1) {
             time = "Just now";
         }
