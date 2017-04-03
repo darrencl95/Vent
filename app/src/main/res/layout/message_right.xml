@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingRight="20dp">
+    android:paddingLeft="125dp">
 
     <TextView
         android:id="@+id/msgu"
@@ -20,11 +20,11 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/shape_bg_outgoing_bubble"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="25dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="30dp"
+        android:paddingTop="7dp"
         android:text="Sample"
         android:textColor="#000"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 </LinearLayout>
