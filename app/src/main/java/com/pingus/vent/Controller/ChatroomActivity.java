@@ -6,12 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -28,12 +30,6 @@ import com.pingus.vent.Model.ChatArrayAdapter;
 import com.pingus.vent.Model.ChatMessage;
 import com.pingus.vent.R;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 public class ChatroomActivity extends AppCompatActivity {
     private DatabaseReference database;
     private FirebaseUser user;
@@ -41,19 +37,22 @@ public class ChatroomActivity extends AppCompatActivity {
     private String userName;
     private ListView messageList;
     private ChatArrayAdapter lvAdapter;
-    private boolean left;
+    private android.support.v7.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState);
-        left = true;
         setContentView(R.layout.activity_chatroom);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getIntent().getStringExtra("CHATROOM_NAME"));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         messageList = (ListView) findViewById(R.id.listChatRoom);
         messageList.setDivider(null);
         messageList.setDividerHeight(0);
         lvAdapter = new ChatArrayAdapter(this, R.layout.message_left);
-        setTitle(getIntent().getStringExtra("CHATROOM_NAME"));
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         user = FirebaseAuth.getInstance().getCurrentUser();
         database.getRoot().child("users").child(user.getUid()).child("userName").addValueEventListener(new ValueEventListener() {
@@ -113,5 +112,10 @@ public class ChatroomActivity extends AppCompatActivity {
         }
         lvAdapter.add(cm);
         lvAdapter.notifyDataSetChanged();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
