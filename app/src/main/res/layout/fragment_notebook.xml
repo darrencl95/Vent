@@ -2,12 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pingus.vent.Model.NotebookFragment">
+    tools:context="com.pingus.vent.Controller.NotebookFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Notebook"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ListView
+            android:id="@+id/noteList"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="0.75"
+            >
+        </ListView>
+
+        <Button
+            android:id="@+id/addNote"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Note" />
+
+    </LinearLayout>
+
 
 </FrameLayout>

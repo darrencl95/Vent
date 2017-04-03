@@ -1,4 +1,4 @@
-package com.pingus.vent.Model;
+package com.pingus.vent.Controller;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,16 +7,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.pingus.vent.R;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NotebookFragment.OnFragmentInteractionListener} interface
+ * {@link NotificationsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NotebookFragment#newInstance} factory method to
+ * Use the {@link NotificationsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NotebookFragment extends Fragment {
+public class NotificationsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,7 +30,7 @@ public class NotebookFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public NotebookFragment() {
+    public NotificationsFragment() {
         // Required empty public constructor
     }
 
@@ -38,11 +40,11 @@ public class NotebookFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NotebookFragment.
+     * @return A new instance of fragment NotificationsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NotebookFragment newInstance(String param1, String param2) {
-        NotebookFragment fragment = new NotebookFragment();
+    public static NotificationsFragment newInstance(String param1, String param2) {
+        NotificationsFragment fragment = new NotificationsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,7 +65,7 @@ public class NotebookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false);
+        return inflater.inflate(R.layout.fragment_notifications, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

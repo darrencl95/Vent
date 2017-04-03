@@ -81,7 +81,7 @@
     <EditText
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/username"
         app:layout_constraintRight_toLeftOf="@+id/v_guideline2"
