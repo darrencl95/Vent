@@ -58,11 +58,17 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ChatMessage chatMessageObj = getItem(position);
         View row = convertView;
+        if(chatMessageObj == null) {
+            return row;
+        }
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(chatMessageObj != null && !chatMessageObj.getMessageUser().equals(username)) {
+        if(chatMessageObj != null && username!= null && !chatMessageObj.getMessageUser().equals(username)) {
             row = inflater.inflate(R.layout.message_left, parent, false);
         } else {
             row = inflater.inflate(R.layout.message_right, parent, false);
+        }
+        if (username == null) {
+            username = "no_username";
         }
         //set username and message text
         chatText = (TextView) row.findViewById(R.id.msgr);
