@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.forismastic.Forismatic;
 import com.pingus.vent.Controller.HomeFragment;
 import com.pingus.vent.R;
 
