@@ -1,15 +1,28 @@
 package com.pingus.vent.Controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.forismastic.Forismatic;
+import com.pingus.vent.Model.QuoteDialog;
 import com.pingus.vent.R;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -23,6 +36,7 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String quote;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -55,17 +69,48 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        final ViewGroup cont = container;
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ListView list = (ListView) view.findViewById(R.id.listView1);
+        String[] array = getResources().getStringArray(R.array.sections);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, array);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                // TODO Auto-generated method stub
+                if(arg2 == 0) { //Quote of the Day
+                    QuoteDialog d = new QuoteDialog(getActivity());
+                    d.show();
+                } else if(arg2 == 1) { //Counselor and Psychiatrist
+                    //TODO Counselor and Psychiatrists nearby
+                } else if(arg2 == 2) { //Local Help Centers
+                    //TODO MAP to find Help Centers
+                } else if(arg2 == 3) { //Campus Police Department
+                    //TODO Police Dept. Info
+                } else if(arg2 == 4) { //Suicide Prevention Hotline
+                    //TODO Hotline Info
+                    return;
+                } else if(arg2 == 5) { //Quiz
+                    //TODO Quiz redirect
+                    return;
+                } else if(arg2 == 6) { //FAQ
+                    //TODO FAQ PAGE
+                    return;
+                }
+                Log.v("TAG", "CLICKED row number: " + arg2);
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
