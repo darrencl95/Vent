@@ -3,25 +3,16 @@ package com.pingus.vent.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.pingus.vent.Model.QuoteDialog;
 import com.pingus.vent.R;
 /**
@@ -31,6 +22,7 @@ import com.pingus.vent.R;
  * to handle interaction events.
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * KEY FOR GOOGLE API: AIzaSyBF3I4yb_ORPebhx_8dBOJZFUtaqk_PP_0
  */
 public class HomeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -93,15 +85,16 @@ public class HomeFragment extends Fragment {
                     d.show();
                 } else if(arg2 == 1) { //Counselor and Psychiatrist
                     //TODO Counselor and Psychiatrists nearby
+                    return;
                 } else if(arg2 == 2) { //Local Help Centers
                     //TODO MAP to find Help Centers
+                    getMap();
                 } else if(arg2 == 3) { //Campus Police Department
                     //TODO Police Dept. Info
                 } else if(arg2 == 4) { //Suicide Prevention Hotline
                     //TODO Hotline Info
                     return;
                 } else if(arg2 == 5) { //Quiz
-                    //TODO Quiz redirect
                     toWebView();
                 } else if(arg2 == 6) { //FAQ
                     //TODO FAQ PAGE
@@ -117,6 +110,12 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(HomeFragment.this.getActivity(),WebViewActivity.class);
         startActivity(intent);
     }
+
+    public void getMap() {
+        Intent intent = new Intent(HomeFragment.this.getActivity(),MapsActivity.class);
+        startActivity(intent);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

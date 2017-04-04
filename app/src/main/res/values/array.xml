@@ -2,8 +2,8 @@
 <resources>
     <string-array name="sections">
         <item >Quote of the Day</item>
-        <item >Counselor and Psychiatrist</item>
-        <item> Local Help Centers</item>
+        <item >Counselors on Campus</item>
+        <item> Help Near Me</item>
         <item> Campus Police Department</item>
         <item> Suicide Prevention Hotline </item>
         <item >Quiz: When should I seek help?</item>
