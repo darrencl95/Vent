@@ -119,6 +119,7 @@ public class ChatroomActivity extends AppCompatActivity {
         }
         lvAdapter.add(cm);
         lvAdapter.notifyDataSetChanged();
+        messageList.setSelection(lvAdapter.getCount() - 1);
     }
     @Override
     public boolean onSupportNavigateUp() {
