@@ -2,6 +2,7 @@ package com.pingus.vent.Model;
 
 /**
  * Created by August on 4/2/2017.
+ * Custom ArrayAdapter for chat
  */
 
 import android.content.Context;
@@ -36,25 +37,27 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     private Context context;
     private String username;
+
     @Override
     public void add(ChatMessage object) {
         chatMessageList.add(object);
         super.add(object);
     }
-
     public ChatArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         this.context = context;
     }
-
+    @Override
     public int getCount() {
         return this.chatMessageList.size();
     }
 
+    @Override
     public ChatMessage getItem(int index) {
         return this.chatMessageList.get(index);
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ChatMessage chatMessageObj = getItem(position);
         View row = convertView;
@@ -72,7 +75,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         chatText.setText(chatMessageObj.getMessageText());
         userText = (TextView) row.findViewById(R.id.msgu);
         userText.setText(chatMessageObj.getMessageUser());
-        //format and time string
+        //format timsetamp string
         Date date = new Date(chatMessageObj.getMessageTime());
         String time = date.toString();
         Date curr = new Date();
@@ -102,6 +105,7 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         } else if (curr.getMinutes() - date.getMinutes() < 1) {
             time = "Just now";
         }
+        //set timestamp text
         dateText = (TextView)row.findViewById(R.id.timeText);
         dateText.setText(time);
         return row;

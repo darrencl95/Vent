@@ -1,12 +1,8 @@
 package com.pingus.vent.Controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -45,6 +41,11 @@ public class RegistrationActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
+    /**
+     * onclick method for register button
+     * registers new user in database if inputs are valid
+     * @param view
+     */
     public void register(View view) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
@@ -73,6 +74,12 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         createAccount(email, password);
     }
+
+    /**
+     * creates new account
+     * @param email the email of the new account
+     * @param password the password of the new account
+     */
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
