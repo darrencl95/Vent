@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -72,10 +74,9 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final ViewGroup cont = container;
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ListView list = (ListView) view.findViewById(R.id.listView1);
         String[] array = getResources().getStringArray(R.array.sections);
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment {
                     return;
                 } else if(arg2 == 5) { //Quiz
                     //TODO Quiz redirect
-                    return;
+                    toWebView();
                 } else if(arg2 == 6) { //FAQ
                     //TODO FAQ PAGE
                     return;
@@ -110,6 +111,11 @@ public class HomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void toWebView() {
+        Intent intent = new Intent(HomeFragment.this.getActivity(),WebViewActivity.class);
+        startActivity(intent);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
