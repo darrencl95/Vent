@@ -140,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
 
             // show or hide the fab button
             toggleFab();
-            return;
+            HomeFragment homeFragment = new HomeFragment();
+            //Toast.makeText(this,"Going Home 3",Toast.LENGTH_SHORT).show();
+            getHomeFragment();
         }
 
         // Sometimes, when fragment has huge data, screen seems hanging
@@ -180,25 +182,25 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 // home
                 HomeFragment homeFragment = new HomeFragment();
+                //Toast.makeText(this,"Going Home 1",Toast.LENGTH_SHORT).show();
                 return homeFragment;
             case 1:
                 // chatroom
                 ChatroomFragment ChatroomFragment = new ChatroomFragment();
+                //Toast.makeText(this,"Going Chat 1",Toast.LENGTH_SHORT).show();
                 return ChatroomFragment;
             case 2:
                 // notebook
-                NotebookFragment NotebookFragment = new NotebookFragment();
-                return NotebookFragment;
+                return new NotebookFragment();
             case 3:
                 // notifications fragment
-                NotificationsFragment notificationsFragment = new NotificationsFragment();
-                return notificationsFragment;
+                return new NotificationsFragment();
 
             case 4:
                 // settings fragment
-                SettingsFragment settingsFragment = new SettingsFragment();
-                return settingsFragment;
+                return new SettingsFragment();
             default:
+                //Toast.makeText(this,"Going Home 2",Toast.LENGTH_SHORT).show();
                 return new HomeFragment();
         }
     }
