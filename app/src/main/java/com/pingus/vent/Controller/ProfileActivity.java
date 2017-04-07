@@ -4,14 +4,30 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pingus.vent.Model.ChatArrayAdapter;
+import com.pingus.vent.Model.ChatMessage;
+import com.pingus.vent.Model.User;
+import com.pingus.vent.R;
 import com.pingus.vent.R;
 
 public class ProfileActivity extends AppCompatActivity {
+    private FirebaseUser user;
+    private DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        user = FirebaseAuth.getInstance().getCurrentUser();
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -31,4 +47,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void changeUsername(String username) {
+        database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
+
+    }
+
+    public void changePassword(String pswd) {
+
+    }
+
 }
