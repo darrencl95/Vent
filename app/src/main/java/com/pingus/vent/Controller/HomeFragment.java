@@ -84,19 +84,14 @@ public class HomeFragment extends Fragment {
                     QuoteDialog d = new QuoteDialog(getActivity());
                     d.show();
                 } else if(arg2 == 1) { //Counselor and Psychiatrist
-                    //TODO Counselor and Psychiatrists nearby
-                    return;
+                    toCounsel();
                 } else if(arg2 == 2) { //Local Help Centers
-                    //TODO MAP to find Help Centers
-                    getMap();
-                } else if(arg2 == 3) { //Campus Police Department
-                    //TODO Police Dept. Info
-                } else if(arg2 == 4) { //Suicide Prevention Hotline
-                    //TODO Hotline Info
-                    return;
-                } else if(arg2 == 5) { //Quiz
+                    toMap();
+                } else if(arg2 == 3) { //Suicide Prevention Hotlines
+                    toHotline();
+                } else if(arg2 == 4) { //Quiz
                     toWebView();
-                } else if(arg2 == 6) { //FAQ
+                } else if(arg2 == 5) { //FAQ
                     //TODO FAQ PAGE
                     return;
                 }
@@ -111,8 +106,18 @@ public class HomeFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void getMap() {
+    public void toMap() {
         Intent intent = new Intent(HomeFragment.this.getActivity(),MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void toCounsel() {
+        Intent intent = new Intent(HomeFragment.this.getActivity(),CounselingActivity.class);
+        startActivity(intent);
+    }
+
+    public void toHotline() {
+        Intent intent = new Intent(HomeFragment.this.getActivity(),HotlineActivity.class);
         startActivity(intent);
     }
 
