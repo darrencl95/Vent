@@ -1,13 +1,38 @@
 package com.pingus.vent.Controller;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.pingus.vent.Model.ChatGroup;
+import com.pingus.vent.Model.ChatType;
+import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -25,6 +50,13 @@ public class NotebookFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FloatingActionButton fabNote;
+
+    private ArrayList<String> notes;
+
+    private DatabaseReference database;
+    private FirebaseUser user;
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,8 +94,59 @@ public class NotebookFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movies, container, false);
+        View view = inflater.inflate(R.layout.fragment_notebook, container, false);
+        setHasOptionsMenu(true);
+
+        fabNote = (FloatingActionButton) view.findViewById(R.id.fabNote);
+        fabNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextScreen = new Intent(getActivity(), NotebookActivity.class);
+                startActivity(nextScreen);
+            }
+        });
+
+        notes = new ArrayList<>();
+        //create list of chat rooms
+        ListView listView = (ListView) view.findViewById(R.id.listNotes);
+        final ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
+                getActivity(), android.R.layout.simple_list_item_1, notes
+        );
+        listView.setAdapter(lvAdapter);
+        //list view reacts to item clicks and takes user to new chat room
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String entry = (String) parent.getAdapter().getItem(position);
+                if (entry == null) {
+                    return;
+                }
+                Intent nextScreen = new Intent(getActivity(), NotebookActivity.class);
+                startActivity(nextScreen);
+            }
+        });
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        database = FirebaseDatabase.getInstance().getReference().child("users");
+        database.getRoot().child("users").child(user.getUid()).child("notes").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Set<String> set = new HashSet<String>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    set.add((String)snapshot.getKey());
+                }
+                notes.clear();
+                notes.addAll(set);
+                lvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
