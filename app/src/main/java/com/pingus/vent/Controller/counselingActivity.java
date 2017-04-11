@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.pingus.vent.R.id.action_clear_notifications;
 import static com.pingus.vent.R.id.toolbar;
 
 public class CounselingActivity extends AppCompatActivity {
@@ -104,7 +105,7 @@ public class CounselingActivity extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.spinlist2);
         ArrayList<String> p = new ArrayList<>();
         p.addAll(value);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getBaseContext(),android.R.layout.simple_list_item_1,p);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getBaseContext(), R.layout.clistview,R.id.swaggername,p);
         list.setAdapter(adapter);
     }
 
