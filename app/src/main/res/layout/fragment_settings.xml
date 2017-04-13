@@ -2,19 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="info.androidhive.navigationdrawer.fragment.SettingsFragment">
+    tools:context=".Controller.MainActivity">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="My Profile" />
+        android:text="My Profile"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button7"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
+        style="@style/DialogButtonStyle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Button"
+        tools:ignore="HardcodedText" />
 
 </FrameLayout>
