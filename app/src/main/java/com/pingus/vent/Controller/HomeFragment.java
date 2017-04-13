@@ -3,6 +3,7 @@ package com.pingus.vent.Controller;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,8 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.pingus.vent.Model.Forismatic;
 import com.pingus.vent.Model.QuoteDialog;
 import com.pingus.vent.R;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -81,22 +86,33 @@ public class HomeFragment extends Fragment {
                                     long arg3) {
                 // TODO Auto-generated method stub
                 if(arg2 == 0) { //Quote of the Day
-                    QuoteDialog d = new QuoteDialog(getActivity());
-                    d.show();
+                    RetrieveQuoteTask task = new RetrieveQuoteTask();
+                    task.execute();
+                    String quote = "";
+                    try {
+                        quote = task.get();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    SweetAlertDialog dialog = new SweetAlertDialog(HomeFragment.this.getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Quote of the Day!")
+                            .setContentText(quote)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+                                }
+                            });
+                    dialog.show();
                 } else if(arg2 == 1) { //Counselor and Psychiatrist
-                    //TODO Counselor and Psychiatrists nearby
-                    return;
+                    toCounsel();
                 } else if(arg2 == 2) { //Local Help Centers
-                    //TODO MAP to find Help Centers
-                    getMap();
-                } else if(arg2 == 3) { //Campus Police Department
-                    //TODO Police Dept. Info
-                } else if(arg2 == 4) { //Suicide Prevention Hotline
-                    //TODO Hotline Info
-                    return;
-                } else if(arg2 == 5) { //Quiz
+                    toMap();
+                } else if(arg2 == 3) { //Suicide Prevention Hotlines
+                    toHotline();
+                } else if(arg2 == 4) { //Quiz
                     toWebView();
-                } else if(arg2 == 6) { //FAQ
+                } else if(arg2 == 5) { //FAQ
                     //TODO FAQ PAGE
                     return;
                 }
@@ -106,13 +122,39 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private class RetrieveQuoteTask extends AsyncTask<String,Void,String> {
+        private Exception exeception;
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                Forismatic.Quote q = new Forismatic(Forismatic.ENGLISH).getQuote();
+                return q.getQuoteText();
+            } catch (Exception exeception) {
+                this.exeception = exeception;
+                return "";
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {}
+    }
+
     public void toWebView() {
         Intent intent = new Intent(HomeFragment.this.getActivity(),WebViewActivity.class);
         startActivity(intent);
     }
 
-    public void getMap() {
+    public void toMap() {
         Intent intent = new Intent(HomeFragment.this.getActivity(),MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void toCounsel() {
+        Intent intent = new Intent(HomeFragment.this.getActivity(),CounselingActivity.class);
+        startActivity(intent);
+    }
+
+    public void toHotline() {
+        Intent intent = new Intent(HomeFragment.this.getActivity(),HotlineActivity.class);
         startActivity(intent);
     }
 
