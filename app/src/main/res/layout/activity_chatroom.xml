@@ -25,7 +25,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
 
         <EditText
             android:id="@+id/messageEditText"
@@ -41,12 +42,14 @@
             android:ems="10"
             android:hint="Message"
             android:background="@drawable/message_edit_bubble"
-            android:inputType="textCapSentences|textAutoComplete|textMultiLine" />
+            android:inputType="textCapSentences|textAutoComplete|textMultiLine"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/button3"
             android:onClick="send"
-            android:layout_width="69dp"
+            android:layout_width="49dp"
             android:layout_height="wrap_content"
             android:background="@drawable/send_button"/>
     </LinearLayout>

@@ -207,8 +207,9 @@ public class ChatroomFragment extends Fragment {
     public void addRoom(final View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.LightDialogTheme);
         builder.setTitle("Enter room name");
-        final EditText  inputField = new EditText(getActivity());
-        builder.setView(inputField);
+        View buildView = getActivity().getLayoutInflater().inflate(R.layout.builder_edit_text, null);
+        final EditText inputField = (EditText) buildView.findViewById(R.id.name_input);
+        builder.setView(buildView);
         builder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -62,6 +62,8 @@ public class GroupsArrayAdapter extends ArrayAdapter<ChatGroup> implements Seria
         header.setText(cg.getName());
         if (cg.getRecentCM() != null) {
             recentMessage.setText(cg.getRecentCM().toString());
+        } else {
+            recentMessage.setText("");
         }
         return row;
     }
