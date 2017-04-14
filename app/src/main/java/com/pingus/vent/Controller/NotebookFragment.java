@@ -30,6 +30,7 @@ import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,7 +55,7 @@ public class NotebookFragment extends Fragment {
     private FloatingActionButton fabNote;
 
     private ArrayList<String> notes;
-    private ArrayList<String> noteContent;
+    private HashMap<String, String> noteContent;
 
     private DatabaseReference database;
     private FirebaseUser user;
@@ -108,7 +109,7 @@ public class NotebookFragment extends Fragment {
         });
 
         notes = new ArrayList<>();
-        noteContent = new ArrayList<>();
+        noteContent = new HashMap<>();
         ListView listView = (ListView) view.findViewById(R.id.listNotes);
         final ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
                 getActivity(), android.R.layout.simple_list_item_1, notes
@@ -123,7 +124,7 @@ public class NotebookFragment extends Fragment {
                 }
                 Intent nextScreen = new Intent(getActivity(), NotebookActivity.class);
                 nextScreen.putExtra("NOTE_TITLE", entry);
-                nextScreen.putExtra("NOTE_CONTENT", noteContent.get(position));
+                nextScreen.putExtra("NOTE_CONTENT", noteContent.get(entry));
                 startActivity(nextScreen);
             }
         });
@@ -137,7 +138,7 @@ public class NotebookFragment extends Fragment {
                 Set<String> set = new HashSet<String>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     set.add((String)snapshot.child("Title").getValue());
-                    noteContent.add((String) snapshot.child("Content").getValue());
+                    noteContent.put((String)snapshot.child("Title").getValue(), (String) snapshot.child("Content").getValue());
                 }
                 notes.clear();
                 notes.addAll(set);
