@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.ChatGroup;
+import com.pingus.vent.Model.ChatMessage;
 import com.pingus.vent.Model.ChatType;
 import com.pingus.vent.Model.GroupsArrayAdapter;
 import com.pingus.vent.R;
@@ -65,6 +66,8 @@ public class ChatroomFragment extends Fragment {
     private DatabaseReference database;
 
     private GroupsArrayAdapter lvAdapter;
+
+    private ListView listView;
 
     public ChatroomFragment() {
         // Required empty public constructor
@@ -112,7 +115,7 @@ public class ChatroomFragment extends Fragment {
         });
 
         //create list of chat rooms
-        ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
+        listView = (ListView) view.findViewById(R.id.listChatRoom);
          lvAdapter = new GroupsArrayAdapter(getContext(), R.layout.chatgroup_list_item);
         listView.setAdapter(lvAdapter);
 
@@ -125,7 +128,7 @@ public class ChatroomFragment extends Fragment {
                     return;
                 }
                Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
-               nextScreen.putExtra("CHATROOM_NAME", entry.getName());
+               nextScreen.putExtra("CHATROOM", entry);
                startActivity(nextScreen);
          }
         });
@@ -162,10 +165,40 @@ public class ChatroomFragment extends Fragment {
     }
 
     private void appendRoom(DataSnapshot snapshot) {
-        ChatGroup cg = snapshot.child(snapshot.getKey()).getValue(ChatGroup.class);
+        final ChatGroup cg = snapshot.child(snapshot.getKey()).getValue(ChatGroup.class);
+        cg.setRecent(snapshot.child(cg.getName()).child("recentCM").getValue(ChatMessage.class));
+        database.child(cg.getName()).child("messages").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                cg.setRecent(dataSnapshot.getValue(ChatMessage.class));
+                lvAdapter.update(cg);
+                lvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         lvAdapter.add(cg);
         lvAdapter.notifyDataSetChanged();
     }
+
     /**
      * on click method for adding a room
      * creates alert dialog builder for input
@@ -239,5 +272,10 @@ public class ChatroomFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        lvAdapter.notifyDataSetChanged();
     }
 }

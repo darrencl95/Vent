@@ -1,5 +1,6 @@
 package com.pingus.vent.Model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * Chat messages
  */
 
-public class ChatMessage {
+public class ChatMessage implements Serializable{
     private String messageText;
     private String messageUser;
     private String userID;

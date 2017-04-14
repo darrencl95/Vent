@@ -17,9 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.ChatArrayAdapter;
+import com.pingus.vent.Model.ChatGroup;
 import com.pingus.vent.Model.ChatMessage;
+import com.pingus.vent.Model.GroupsArrayAdapter;
 import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
+
+import java.security.acl.Group;
 
 public class ChatroomActivity extends AppCompatActivity {
     private DatabaseReference database;
@@ -29,6 +33,7 @@ public class ChatroomActivity extends AppCompatActivity {
     private ListView messageList;
     private ChatArrayAdapter lvAdapter;
     private android.support.v7.widget.Toolbar toolbar;
+    private ChatGroup currentCG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +45,11 @@ public class ChatroomActivity extends AppCompatActivity {
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         messageText = (EditText) findViewById(R.id.messageEditText);
         messageList = (ListView) findViewById(R.id.listChatRoom);
+        currentCG = (ChatGroup) getIntent().getSerializableExtra("CHATROOM");
 
         //setup toolbar with back button and name
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getIntent().getStringExtra("CHATROOM_NAME"));
+        getSupportActionBar().setTitle(currentCG.getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -53,7 +59,7 @@ public class ChatroomActivity extends AppCompatActivity {
         lvAdapter = new ChatArrayAdapter(this, R.layout.message_left);
 
         //add user listener to get username of current user to pass to Adapter
-        database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
+        database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(currentCG.getName()).child("messages");
         user = FirebaseAuth.getInstance().getCurrentUser();
         database.getRoot().child("users").child(user.getUid()).child("userName").addValueEventListener(new ValueEventListener() {
             @Override
@@ -128,6 +134,8 @@ public class ChatroomActivity extends AppCompatActivity {
         }
         lvAdapter.add(cm);
         lvAdapter.notifyDataSetChanged();
+        currentCG.setRecent(cm);
+        database.getParent().child(currentCG.getName()).setValue(currentCG);
         messageList.setSelection(lvAdapter.getCount() - 1);
     }
     @Override

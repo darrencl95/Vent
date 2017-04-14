@@ -1,6 +1,7 @@
 package com.pingus.vent.Model;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,18 @@ import android.widget.Toast;
 
 import com.pingus.vent.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by August on 4/13/2017.
  */
 
-public class GroupsArrayAdapter extends ArrayAdapter<ChatGroup> {
+public class GroupsArrayAdapter extends ArrayAdapter<ChatGroup> implements Serializable{
 
     private Context context;
 
     private ArrayList<ChatGroup> chatList = new ArrayList<>();
-
-    private ChatMessage message;
 
     @Override
     public void add(ChatGroup object) {
@@ -33,7 +33,9 @@ public class GroupsArrayAdapter extends ArrayAdapter<ChatGroup> {
     public GroupsArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         this.context = context;
-        message = null;
+    }
+    public void update(ChatGroup cg) {
+        chatList.set(chatList.indexOf(cg), cg);
     }
     @Override
     public int getCount() {
@@ -58,15 +60,9 @@ public class GroupsArrayAdapter extends ArrayAdapter<ChatGroup> {
         TextView header = (TextView) row.findViewById(R.id.header);
         TextView recentMessage = (TextView) row.findViewById(R.id.recent_message);
         header.setText(cg.getName());
-        if (cg.getName() == null) {
-            Toast.makeText(getContext(), "Null name :(", Toast.LENGTH_SHORT).show();
-        }
-        if (message != null) {
-            recentMessage.setText(message.toString());
+        if (cg.getRecentCM() != null) {
+            recentMessage.setText(cg.getRecentCM().toString());
         }
         return row;
-    }
-    public void setRecentMessage(ChatMessage message) {
-        this.message = message;
     }
 }
