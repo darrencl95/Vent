@@ -51,6 +51,7 @@ public class ChatroomActivity extends AppCompatActivity {
         messageList.setDivider(null);
         messageList.setDividerHeight(0);
         lvAdapter = new ChatArrayAdapter(this, R.layout.message_left);
+
         //add user listener to get username of current user to pass to Adapter
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -61,7 +62,6 @@ public class ChatroomActivity extends AppCompatActivity {
                 if (userName == null) {
                     database.getRoot().child("users").child(user.getUid()).setValue(new User("no_username"));
                 }
-                lvAdapter.setUsername(userName);
                 lvAdapter.notifyDataSetChanged();
             }
 

@@ -36,7 +36,6 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     private TextView dateText;
     private List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
     private Context context;
-    private String username;
 
     @Override
     public void add(ChatMessage object) {
@@ -61,11 +60,13 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ChatMessage chatMessageObj = getItem(position);
         View row = convertView;
+        //to prevent invalid message objects from being added
         if(chatMessageObj == null) {
             return row;
         }
+        //set message view based on if it was sent by current user
         LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(chatMessageObj != null && username!= null && !chatMessageObj.getMessageUser().equals(username)) {
+        if(chatMessageObj != null && !chatMessageObj.getUserID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             row = inflater.inflate(R.layout.message_left, parent, false);
         } else {
             row = inflater.inflate(R.layout.message_right, parent, false);
@@ -109,8 +110,5 @@ public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
         dateText = (TextView)row.findViewById(R.id.timeText);
         dateText.setText(time);
         return row;
-    }
-    public void setUsername(String username) {
-        this.username = username;
     }
 }

@@ -19,6 +19,10 @@ public class ChatGroup {
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     @Override
     public String toString() {
         return name;
@@ -26,6 +30,10 @@ public class ChatGroup {
 
     public ChatType getType() {
         return type;
+    }
+
+    public void setType(ChatType type) {
+        this.type = type;
     }
 
 }
