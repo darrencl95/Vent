@@ -20,19 +20,24 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.ChatGroup;
+import com.pingus.vent.Model.ChatMessage;
 import com.pingus.vent.Model.ChatType;
+import com.pingus.vent.Model.GroupsArrayAdapter;
 import com.pingus.vent.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import static android.R.attr.data;
 import static android.R.attr.fragment;
 
 /**
@@ -60,7 +65,9 @@ public class ChatroomFragment extends Fragment {
 
     private DatabaseReference database;
 
-    private ArrayList<String> chatItems;
+    private GroupsArrayAdapter lvAdapter;
+
+    private ListView listView;
 
     public ChatroomFragment() {
         // Required empty public constructor
@@ -106,38 +113,46 @@ public class ChatroomFragment extends Fragment {
                 addRoom(v);
             }
         });
-        chatItems = new ArrayList<>();
+
         //create list of chat rooms
-        ListView listView = (ListView) view.findViewById(R.id.listChatRoom);
-        final ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
-          getActivity(), android.R.layout.simple_list_item_1, chatItems
-        );
+        listView = (ListView) view.findViewById(R.id.listChatRoom);
+         lvAdapter = new GroupsArrayAdapter(getContext(), R.layout.chatgroup_list_item);
         listView.setAdapter(lvAdapter);
+
         //list view reacts to item clicks and takes user to new chat room
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String entry = (String) parent.getAdapter().getItem(position);
+                ChatGroup entry = (ChatGroup) parent.getAdapter().getItem(position);
                 if (entry == null) {
                     return;
                 }
                Intent nextScreen = new Intent(getActivity(), ChatroomActivity.class);
-               nextScreen.putExtra("CHATROOM_NAME", entry);
+               nextScreen.putExtra("CHATROOM", entry);
                startActivity(nextScreen);
          }
         });
+
         //setup chatroom database listener
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist");
-        database.addValueEventListener(new ValueEventListener() {
+        database.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Set<String> set = new HashSet<String>();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    set.add((String)snapshot.getKey());
-                }
-                chatItems.clear();
-                chatItems.addAll(set);
-                lvAdapter.notifyDataSetChanged();
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                appendRoom(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -149,6 +164,41 @@ public class ChatroomFragment extends Fragment {
         return view;
     }
 
+    private void appendRoom(DataSnapshot snapshot) {
+        final ChatGroup cg = snapshot.child(snapshot.getKey()).getValue(ChatGroup.class);
+        cg.setRecent(snapshot.child(cg.getName()).child("recentCM").getValue(ChatMessage.class));
+        database.child(cg.getName()).child("messages").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                cg.setRecent(dataSnapshot.getValue(ChatMessage.class));
+                lvAdapter.update(cg);
+                lvAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        lvAdapter.add(cg);
+        lvAdapter.notifyDataSetChanged();
+    }
+
     /**
      * on click method for adding a room
      * creates alert dialog builder for input
@@ -157,8 +207,9 @@ public class ChatroomFragment extends Fragment {
     public void addRoom(final View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.LightDialogTheme);
         builder.setTitle("Enter room name");
-        final EditText  inputField = new EditText(getActivity());
-        builder.setView(inputField);
+        View buildView = getActivity().getLayoutInflater().inflate(R.layout.builder_edit_text, null);
+        final EditText inputField = (EditText) buildView.findViewById(R.id.name_input);
+        builder.setView(buildView);
         builder.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -167,9 +218,10 @@ public class ChatroomFragment extends Fragment {
                     Toast.makeText(getContext(), "Chatroom name cannot be empty", Toast.LENGTH_SHORT).show();
                     addRoom(view);
                 }
-                ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED);
-                database.child(newCG.toString()).push().setValue(newCG);
-                database.child(newCG.toString()).push().setValue("messages");
+                ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED,
+                        FirebaseAuth.getInstance().getCurrentUser().getUid());
+                database.child(newCG.toString()).child(newCG.getName()).setValue(newCG);
+                database.child(newCG.toString()).child("messages").setValue("messages");
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -221,5 +273,10 @@ public class ChatroomFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        lvAdapter.notifyDataSetChanged();
     }
 }
