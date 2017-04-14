@@ -54,6 +54,7 @@ public class NotebookFragment extends Fragment {
     private FloatingActionButton fabNote;
 
     private ArrayList<String> notes;
+    private ArrayList<String> noteContent;
 
     private DatabaseReference database;
     private FirebaseUser user;
@@ -107,13 +108,12 @@ public class NotebookFragment extends Fragment {
         });
 
         notes = new ArrayList<>();
-        //create list of chat rooms
+        noteContent = new ArrayList<>();
         ListView listView = (ListView) view.findViewById(R.id.listNotes);
         final ArrayAdapter<String> lvAdapter = new ArrayAdapter<String>(
                 getActivity(), android.R.layout.simple_list_item_1, notes
         );
         listView.setAdapter(lvAdapter);
-        //list view reacts to item clicks and takes user to new chat room
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -122,6 +122,8 @@ public class NotebookFragment extends Fragment {
                     return;
                 }
                 Intent nextScreen = new Intent(getActivity(), NotebookActivity.class);
+                nextScreen.putExtra("NOTE_TITLE", entry);
+                nextScreen.putExtra("NOTE_CONTENT", noteContent.get(position));
                 startActivity(nextScreen);
             }
         });
@@ -131,9 +133,11 @@ public class NotebookFragment extends Fragment {
         database.getRoot().child("users").child(user.getUid()).child("notes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                noteContent.clear();
                 Set<String> set = new HashSet<String>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    set.add((String)snapshot.getKey());
+                    set.add((String)snapshot.child("Title").getValue());
+                    noteContent.add((String) snapshot.child("Content").getValue());
                 }
                 notes.clear();
                 notes.addAll(set);
