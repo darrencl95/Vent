@@ -108,11 +108,10 @@ public class ChatroomActivity extends AppCompatActivity {
      * @param view the view that's being used, must be there ¯\_(ツ)_/¯
      */
     public void send(View view) {
-        ChatMessage message = new ChatMessage(messageText.getText().toString(), userName);
+        ChatMessage message = new ChatMessage(messageText.getText().toString(), userName, user.getUid());
         if(message.getMessageText().isEmpty()) {
             return;
         }
-        message.setLeft(false);
         database.push().setValue(message);
         messageText.setText("");
     }

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -167,7 +168,8 @@ public class ChatroomFragment extends Fragment {
                     Toast.makeText(getContext(), "Chatroom name cannot be empty", Toast.LENGTH_SHORT).show();
                     addRoom(view);
                 }
-                ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED);
+                ChatGroup newCG = new ChatGroup(name, ChatType.USER_CREATED,
+                        FirebaseAuth.getInstance().getCurrentUser().getUid());
                 database.child(newCG.toString()).push().setValue(newCG);
                 database.child(newCG.toString()).push().setValue("messages");
             }

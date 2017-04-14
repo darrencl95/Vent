@@ -7,12 +7,14 @@ package com.pingus.vent.Model;
 public class ChatGroup {
     private String name;
     private ChatType type;
+    private String creatorID;
     public ChatGroup() {
 
     }
-    public ChatGroup(String name, ChatType type) {
+    public ChatGroup(String name, ChatType type, String creatorID) {
         this.name = name;
         this.type = type;
+        this.creatorID = creatorID;
     }
     public String getName() {
         return name;

@@ -10,13 +10,13 @@ import java.util.Date;
 public class ChatMessage {
     private String messageText;
     private String messageUser;
+    private String userID;
     private long messageTime;
-    private boolean left;
 
-    public ChatMessage(String messageText, String messageUser) {
+    public ChatMessage(String messageText, String messageUser, String userID) {
         this.messageText = messageText;
         this.messageUser = messageUser;
-        left = true;
+        this.userID = userID;
         // Initialize to current time
         messageTime = new Date().getTime();
     }
@@ -49,14 +49,12 @@ public class ChatMessage {
         this.messageTime = messageTime;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
     @Override
     public String toString() {
         return messageUser + ": " + messageText;
-    }
-    public void setLeft(boolean isLeft) {
-        left = isLeft;
-    }
-    public boolean isLeft() {
-        return left;
     }
 }
