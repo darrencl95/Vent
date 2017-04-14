@@ -27,6 +27,7 @@
             android:layout_margin="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_weight="0.94"
+            android:gravity="top"
             android:hint="Contents" />
 
         <Button
