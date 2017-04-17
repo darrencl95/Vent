@@ -21,6 +21,7 @@ import com.pingus.vent.R;
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference database;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void changePassword(String pswd) {
-
+        user.updatePassword(pswd);
     }
 
 }
