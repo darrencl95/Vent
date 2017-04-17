@@ -6,6 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        tools:layout_editor_absoluteX="209dp"
+        tools:layout_editor_absoluteY="432dp" />
+
     <ImageView
         android:id="@+id/coverPhoto"
         android:layout_width="wrap_content"
@@ -16,10 +24,28 @@
         tools:layout_editor_absoluteY="-193dp" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/profilePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/Oval"
         tools:layout_editor_absoluteX="61dp"
         tools:layout_editor_absoluteY="16dp" />
+
+    <EditText
+        android:id="@+id/changePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="username"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="300dp" />
+
+    <Button
+        android:id="@+id/changeUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Username"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="432dp" />
 </android.support.constraint.ConstraintLayout>
