@@ -48,4 +48,12 @@
         android:text="Change Username"
         tools:layout_editor_absoluteX="7dp"
         tools:layout_editor_absoluteY="432dp" />
+
+    <Button
+        android:id="@+id/viewFriends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Friends"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="503dp" />
 </android.support.constraint.ConstraintLayout>
