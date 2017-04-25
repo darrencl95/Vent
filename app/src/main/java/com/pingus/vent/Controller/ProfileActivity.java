@@ -77,6 +77,20 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }) ;
+        changepwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        }) ;
+        userChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), ChangeUsernameActivity.class);
+                startActivity(intent);
+            }
+        }) ;
     }
 
     @Override
