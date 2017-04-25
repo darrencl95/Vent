@@ -17,19 +17,66 @@ import com.pingus.vent.Model.ChatMessage;
 import com.pingus.vent.Model.User;
 import com.pingus.vent.R;
 import com.pingus.vent.R;
+import android.widget.Button;
+import android.widget.TextView;
+import android.view.View;
+import android.content.Intent;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.pingus.vent.R;
+import com.pingus.vent.Model.User;
+
+import static com.pingus.vent.R.id.viewFriends;
+
 
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference database;
     private String email;
+    private TextView currentUsername;
+    private ImageView profilePicture;
+    private Button changepwd;
+    private Button accessFriendList = (Button) findViewById(R.id.viewFriends);
+
+    private Button userChange;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        userChange = (Button) findViewById(R.id.changeUsername);
         database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.my_profile_page);
         user = FirebaseAuth.getInstance().getCurrentUser();
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        accessFriendList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), FriendlistActivity.class);
+                startActivity(intent);
+            }
+        }) ;
     }
 
     @Override
@@ -51,6 +98,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void changeUsername(String username) {
         database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
+        currentUsername = (TextView) findViewById(R.id.currentUsername);
+        currentUsername.setText(username);
+
 
     }
 
@@ -58,4 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
         user.updatePassword(pswd);
     }
 
-}
+
+
+};
+
