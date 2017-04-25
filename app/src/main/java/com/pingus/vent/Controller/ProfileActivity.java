@@ -100,8 +100,6 @@ public class ProfileActivity extends AppCompatActivity {
         database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
         currentUsername = (TextView) findViewById(R.id.currentUsername);
         currentUsername.setText(username);
-
-
     }
 
     public void changePassword(String pswd) {
