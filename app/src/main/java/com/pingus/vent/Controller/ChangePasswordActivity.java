@@ -15,6 +15,8 @@ import com.pingus.vent.R;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by ishanwaykul on 4/25/17.
  */
@@ -26,15 +28,20 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference database;
     private TextView currentUsername;
+    private static final Pattern p = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z" +
+            "0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x07\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b" +
+            "\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(gatech.edu|GATECH.EDU)");
 
 
     protected void onCreate(Bundle savedStateInstance) {
-        user = FirebaseAuth.getInstance().getCurrentUser();
+
         super.onCreate(savedStateInstance);
         setContentView(R.layout.change_password);
+        user = FirebaseAuth.getInstance().getCurrentUser();
         entry = (EditText) findViewById(R.id.newPasswordEntry);
         confirmEntry = (EditText) findViewById(R.id.confirmnewPasswordEntry);
         end = (Button) findViewById(R.id.changePass);
+
         end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

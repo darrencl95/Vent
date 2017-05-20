@@ -8,52 +8,43 @@
 
     <Button
         android:id="@+id/changePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="159dp"
+        android:layout_height="48dp"
         android:text="Change Password"
         tools:layout_editor_absoluteX="209dp"
-        tools:layout_editor_absoluteY="432dp" />
-
-    <ImageView
-        android:id="@+id/coverPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/rectanglecoverphoto"
-        tools:layout_editor_absoluteY="-193dp" />
+        tools:layout_editor_absoluteY="370dp" />
 
     <ImageView
         android:id="@+id/profilePicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="263dp"
+        android:layout_height="280dp"
         app:srcCompat="@drawable/oval"
         tools:layout_editor_absoluteX="61dp"
         tools:layout_editor_absoluteY="16dp" />
 
     <EditText
         android:id="@+id/currentUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="215dp"
+        android:layout_height="43dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="username"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="300dp" />
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="296dp" />
 
     <Button
         android:id="@+id/changeUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="158dp"
+        android:layout_height="48dp"
         android:text="Change Username"
-        tools:layout_editor_absoluteX="7dp"
-        tools:layout_editor_absoluteY="432dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="370dp" />
 
     <Button
         android:id="@+id/viewFriends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="117dp"
+        android:layout_height="48dp"
         android:text="View Friends"
         tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="503dp" />
+        tools:layout_editor_absoluteY="479dp" />
 </android.support.constraint.ConstraintLayout>

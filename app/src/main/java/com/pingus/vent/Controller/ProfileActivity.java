@@ -55,21 +55,22 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView currentUsername;
     private ImageView profilePicture;
     private Button changepwd;
-    private Button accessFriendList = (Button) findViewById(R.id.viewFriends);
+    private Button accessFriendList;
 
     private Button userChange;
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        userChange = (Button) findViewById(R.id.changeUsername);
-        database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile_page);
-        user = FirebaseAuth.getInstance().getCurrentUser();
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        accessFriendList = (Button) findViewById(R.id.viewFriends);
+        changepwd = (Button) findViewById(R.id.changePassword);
+        userChange = (Button) findViewById(R.id.changeUsername);
         accessFriendList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,17 +81,21 @@ public class ProfileActivity extends AppCompatActivity {
         changepwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), ChangePasswordActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(getBaseContext(), ChangePasswordActivity.class);
+                startActivity(intent2);
             }
         }) ;
         userChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), ChangeUsernameActivity.class);
-                startActivity(intent);
+                Intent intent4 = new Intent(getBaseContext(), ChangeUsernameActivity.class);
+                startActivity(intent4);
             }
         }) ;
+
+        //database = FirebaseDatabase.getInstance().getReference().child("chatroomlist").child(getIntent().getStringExtra("CHATROOM_NAME")).child("messages");
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
