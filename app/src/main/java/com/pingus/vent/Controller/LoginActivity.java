@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.password);
         loginBtn = (Button) findViewById(R.id.loginbutton);
         registerBtn = (Button) findViewById(R.id.regbutton);
-        logo = (ImageView) findViewById(R.id.vicon);
+        //logo = (ImageView) findViewById(R.id.vicon);
         background = (ImageView) findViewById(R.id.vbg);
         forgotpw = (TextView) findViewById(R.id.fpw);
 

@@ -114,7 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Button btnRestaurant = (Button) findViewById(R.id.btnPsychiatrist);
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
-            String Restaurant = "Psychiatrist";
+            String Restaurant = "Crisis Center";
             @Override
             public void onClick(View v) {
                 Log.d("onClick", "Button is Clicked");
@@ -126,7 +126,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("onClick", url);
                 GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
                 getNearbyPlacesData.execute(DataTransfer);
-                Toast.makeText(MapsActivity.this,"Nearby Psychiatrists", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapsActivity.this,"Nearby Crisis Centers", Toast.LENGTH_LONG).show();
             }
         });
 

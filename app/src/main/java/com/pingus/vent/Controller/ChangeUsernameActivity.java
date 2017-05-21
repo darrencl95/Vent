@@ -53,8 +53,8 @@ public class ChangeUsernameActivity extends AppCompatActivity {
 
     }
     public void changeUsername(String username) {
-        database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
-        currentUsername = (TextView) findViewById(R.id.currentUsername);
-        currentUsername.setText(username);
+        //database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
+        //currentUsername = (TextView) findViewById(R.id.currentUsername);
+       // currentUsername.setText(username);
     }
 }

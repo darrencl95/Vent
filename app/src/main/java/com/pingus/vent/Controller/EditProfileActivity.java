@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -46,40 +45,65 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pingus.vent.R;
 import com.pingus.vent.Model.User;
 
+import static com.pingus.vent.R.id.viewFriends;
 
 
-public class ProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference database;
-    private ImageView profPic;
-    private TextView userName;
-    private TextView bio;
-    private Button editProfile;
-    private android.support.v7.widget.Toolbar toolbar;
+    private String email;
+    private TextView currentUsername;
+    private TextView currentEmail;
+    private TextView currentBio;
+    private ImageView profilePicture;
+    private Button changepwd;
+    private Button accessFriendList;
+
+    private Button userChange;
 
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_profile_page);
-        profPic = (ImageView) findViewById(R.id.ivUserProfilePhoto);
-        userName = (TextView) findViewById(R.id.textView3);
-        bio = (TextView) findViewById(R.id.textView6);
-        editProfile = (Button) findViewById(R.id.button2);
-        editProfile.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.profile_activity);
+        accessFriendList = (Button) findViewById(R.id.viewFriends);
+        changepwd = (Button) findViewById(R.id.buttonPassword);
+        userChange = (Button) findViewById(R.id.buttonUsername);
+        profilePicture = (ImageView) findViewById(R.id.ivUserProfilePhoto);
+        currentUsername = (TextView) findViewById(R.id.textViewUsername);
+        currentEmail = (TextView) findViewById(R.id.textViewEmail);
+        currentBio = (TextView) findViewById(R.id.textViewBio);
+        accessFriendList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ProfileActivity.this,"Now going to edit profile activity",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getBaseContext(), EditProfileActivity.class);
+                Intent intent = new Intent(getBaseContext(), FriendlistActivity.class);
                 startActivity(intent);
+            }
+        }) ;
+        changepwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(getBaseContext(), ChangePasswordActivity.class);
+                startActivity(intent2);
+            }
+        }) ;
+        userChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4 = new Intent(getBaseContext(), ChangeUsernameActivity.class);
+                startActivity(intent4);
             }
         }) ;
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user.getDisplayName() != null) {
-            userName.setText(user.getDisplayName());
+            currentUsername.setText(user.getDisplayName());
         }
+        currentEmail.setText(user.getEmail());
+        //TODO set up the bio page in the database
+        //currentBio.setText(user.getBio());
     }
 
     @Override
@@ -98,5 +122,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
 
+    public void changeUsername(String username) {
+        database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
+        currentUsername.setText(username);
+    }
+    public void changePassword(String pswd) {
+        user.updatePassword(pswd);
+    }
+}

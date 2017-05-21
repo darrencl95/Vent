@@ -61,6 +61,9 @@
         <activity android:name=".Controller.CounselingActivity" />
         <activity android:name=".Controller.HotlineActivity"></activity>
         <activity android:name=".Controller.NotebookActivity"/>
+        <activity android:name=".Controller.EditProfileActivity"/>
+        <activity android:name=".Controller.ChangeUsernameActivity"/>
+        <activity android:name=".Controller.ChangePasswordActivity"/>
     </application>
 
 </manifest>
