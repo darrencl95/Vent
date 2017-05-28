@@ -70,7 +70,9 @@ public class QuoteDialog extends Dialog implements android.view.View.OnClickList
         dismiss();
     }
 
-
+    /**
+     * Retrieves a quote using Async
+     */
     private class RetrieveQuoteTask extends AsyncTask<String,Void,String> {
         private Exception exeception;
         @Override

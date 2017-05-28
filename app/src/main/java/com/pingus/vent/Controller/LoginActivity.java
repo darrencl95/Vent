@@ -110,7 +110,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Signs the user in
+     * @param email the email inputted
+     * @param password the password inputted
+     */
     private void signIn(String email, String password) {
         if(email.equals("") || password.equals("")) {
             Toast.makeText(getBaseContext(), "Email or Password Invalid", Toast.LENGTH_SHORT).show();

@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Darren on 3/5/2017.
+ * Verifies the username and password of the user when logging in
  */
 
 public class CredentialVerification {
@@ -13,11 +14,21 @@ public class CredentialVerification {
             "0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x07\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b" +
             "\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(gatech.edu|GATECH.EDU)");
 
+    /**
+     * Verifies the email
+     * @param email the email to verify
+     * @return boolean true if passed, false if not
+     */
     public static boolean verifyEmail(String email) {
         Matcher m = p.matcher(email);
         return m.matches();
     }
 
+    /**
+     * Verifies the password
+     * @param password the password to verify
+     * @return String the hashed message
+     */
     public static String verifyPassword(String password) {
         String message = "";
         boolean length = password.length() >= 8;

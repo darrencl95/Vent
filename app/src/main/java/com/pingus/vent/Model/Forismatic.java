@@ -17,6 +17,9 @@ import javax.xml.xpath.XPathFactory;
 
 import org.xml.sax.InputSource;
 
+/**
+ * Edited by Shantanu Mantri
+ */
 public class Forismatic {
 	private final static String BASE_URL = "http://api.forismatic.com/api/1.0/";
 	private final static String API_METHOD_TITLE = "method";

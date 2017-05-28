@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 /**
  * Created by ishanwaykul on 4/25/17.
+ * Changes the username via the profile page
  */
 
 public class ChangeUsernameActivity extends AppCompatActivity {
@@ -52,6 +53,11 @@ public class ChangeUsernameActivity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Helper function to change the username
+     * @param username to be changed to
+     */
     public void changeUsername(String username) {
         //database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
         //currentUsername = (TextView) findViewById(R.id.currentUsername);

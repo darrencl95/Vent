@@ -1,10 +1,4 @@
 package com.pingus.vent.Model;
-
-/**
- * Created by August on 4/2/2017.
- * Custom ArrayAdapter for chat
- */
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +22,10 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * Created by August on 4/2/2017.
+ * Custom ArrayAdapter for chat
+ */
 public class ChatArrayAdapter extends ArrayAdapter<ChatMessage> {
 
     private TextView chatText;

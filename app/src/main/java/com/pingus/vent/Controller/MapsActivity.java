@@ -32,6 +32,10 @@ import com.pingus.vent.R;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Edited by Shantanu Mantri
+ * Gets the map to give closest suicide prevention centers, etc.
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -70,6 +74,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * Checks if google play services is available
+     * @return true if it's on, false if unavailable
+     */
     private boolean CheckGooglePlayServices() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
         int result = googleAPI.isGooglePlayServicesAvailable(this);
@@ -170,6 +178,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    /**
+     * Builds the google client
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -192,6 +203,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * gets the map place based on url
+     * @param latitude the latitude of the position
+     * @param longitude the longitude of the position
+     * @param nearbyPlace the closest places to the current location
+     * @return String the closest places
+     */
     private String getUrl(double latitude, double longitude, String nearbyPlace) {
 
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");

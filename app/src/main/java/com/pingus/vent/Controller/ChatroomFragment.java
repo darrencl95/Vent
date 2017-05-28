@@ -164,6 +164,10 @@ public class ChatroomFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Adds a room to the chat
+     * @param snapshot the new room data to add
+     */
     private void appendRoom(DataSnapshot snapshot) {
         final ChatGroup cg = snapshot.child(snapshot.getKey()).getValue(ChatGroup.class);
         cg.setRecent(snapshot.child(cg.getName()).child("recentCM").getValue(ChatMessage.class));

@@ -30,6 +30,10 @@ import java.util.Set;
 import static com.pingus.vent.R.id.action_clear_notifications;
 import static com.pingus.vent.R.id.toolbar;
 
+/**
+ * Created by Shantanu Mantri
+ * Controls the view for Counselors, On Campus Resources, etc based on schools selected, etc
+ */
 public class CounselingActivity extends AppCompatActivity {
     private DatabaseReference database;
     private ArrayList<String> colleges;

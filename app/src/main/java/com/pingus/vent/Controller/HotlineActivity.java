@@ -15,6 +15,10 @@ import com.pingus.vent.R;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Shantanu Mantri
+ * Creates a controller to list the references to key hotlines (sucide, LGBT, etc.)
+ */
 public class HotlineActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private ArrayList<String> hotlines;

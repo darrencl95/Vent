@@ -25,6 +25,10 @@ import com.pingus.vent.R;
 
 import java.security.acl.Group;
 
+/**
+ * Created by August Wagner
+ * The main activity that dictates which chatrooms are open, controls amount of users in chats, etc
+ */
 public class ChatroomActivity extends AppCompatActivity {
     private DatabaseReference database;
     private FirebaseUser user;

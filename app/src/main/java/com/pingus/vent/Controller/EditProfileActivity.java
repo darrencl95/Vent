@@ -47,7 +47,10 @@ import com.pingus.vent.Model.User;
 
 import static com.pingus.vent.R.id.viewFriends;
 
-
+/**
+ * The main activity for editing profiles, extends to editpassword,editusername activities
+ * Created by Ishan Waykul
+ */
 public class EditProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference database;
@@ -123,10 +126,19 @@ public class EditProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Changes the username
+     * @param username the new username
+     */
     public void changeUsername(String username) {
         database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
         currentUsername.setText(username);
     }
+
+    /**
+     * Changes the password
+     * @param pswd the password to change to
+     */
     public void changePassword(String pswd) {
         user.updatePassword(pswd);
     }

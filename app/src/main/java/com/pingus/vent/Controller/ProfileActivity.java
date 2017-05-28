@@ -47,7 +47,10 @@ import com.pingus.vent.R;
 import com.pingus.vent.Model.User;
 
 
-
+/**
+ * Created by Ishan Waykul
+ * The main profile activity for all users
+ */
 public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference database;

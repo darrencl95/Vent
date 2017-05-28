@@ -26,6 +26,10 @@ import com.pingus.vent.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+/**
+ * Created by Shantanu Mantri, August Wagner, Darren Leung, Ishan Waykul
+ * Controller for the main activity, holds all the key components of the application
+ */
 public class MainActivity extends AppCompatActivity {
 
     private NavigationView navigationView;
@@ -177,6 +181,10 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
+    /**
+     * Function to get all the fragments based on touch
+     * @return the Fragment to go to
+     */
     private Fragment getHomeFragment() {
         switch (navItemIndex) {
             case 0:
@@ -205,14 +213,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets the toolbar title
+     */
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
     }
 
+    /**
+     * Gets the selected item from the Navigation Menu
+     */
     private void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
 
+    /**
+     * Sets up the view for the navigation page
+     */
     private void setUpNavigationView() {
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -364,7 +381,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // show or hide the fab
+    /**
+     * Show or hide the fab
+     */
     private void toggleFab() {
         if (navItemIndex == 0)
             fab.show();

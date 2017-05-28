@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by ishanwaykul on 4/25/17.
+ * Changes the user's password via the profile page
  */
 
 public class ChangePasswordActivity extends AppCompatActivity {

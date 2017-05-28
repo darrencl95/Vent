@@ -10,6 +10,10 @@ import android.webkit.WebViewClient;
 
 import com.pingus.vent.R;
 
+/**
+ * Edited by Shantanu Mantri
+ * WebViewActivity allows the user to connect to the internet via the application
+ */
 public class WebViewActivity extends AppCompatActivity {
 
     @Override
