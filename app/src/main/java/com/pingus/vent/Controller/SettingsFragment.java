@@ -1,5 +1,6 @@
 package com.pingus.vent.Controller;
 
+import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,9 +9,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.pingus.vent.Model.SettingArrayAdapter;
 import com.pingus.vent.R;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,23 +77,54 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button b = (Button) view.findViewById(R.id.button7);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingsFragment.this.getActivity(),ProfileActivity.class);
-                startActivity(intent);
+
+        //TextViews
+        TextView acct = (TextView) view.findViewById(R.id.textView2);
+        TextView notif = (TextView) view.findViewById(R.id.textView3);
+        TextView helper = (TextView) view.findViewById(R.id.textView4);
+
+        //ListViews
+        ListView account = (ListView) view.findViewById(R.id.settings_account);
+        ListView notifications = (ListView) view.findViewById(R.id.settings_notifications);
+        ListView help = (ListView) view.findViewById(R.id.settings_contact);
+
+        //ListView Contents
+        String[] accountOptions = new String[] {"My Profile", "Blocked Users"};
+        String[] notifOptions = new String[] {"Block Comments", "Block Likes", "Block Friend Requests"};
+        String[] contactOptions = new String[] {"Contact Us"};
+
+        //ListView Adapters
+        ArrayAdapter<String> accountAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, accountOptions);
+        account.setAdapter(accountAdapter);
+        SettingArrayAdapter notifAdapter = new SettingArrayAdapter(getActivity(), notifOptions);
+        notifications.setAdapter(notifAdapter);
+        ArrayAdapter<String> contactAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, contactOptions);
+        help.setAdapter(contactAdapter);
+
+        //Onclick listeners for listviews
+        account.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if(position == 0) {
+                    Intent intent = new Intent(SettingsFragment.this.getActivity(),ProfileActivity.class);
+                    startActivity(intent);
+                } else { //position == 1
+                    Toast.makeText(SettingsFragment.this.getActivity(), "Clicked on Blocked List!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        help.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(SettingsFragment.this.getActivity(), "Clicked on Contact!", Toast.LENGTH_SHORT).show();
             }
         });
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 /**
  * Created by August on 4/13/2017.
+ * Handles the Group listviews in the Group Chat
  */
 
 public class GroupsArrayAdapter extends ArrayAdapter<ChatGroup> implements Serializable{
