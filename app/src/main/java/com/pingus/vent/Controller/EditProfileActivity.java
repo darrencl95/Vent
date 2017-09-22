@@ -63,6 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button accessFriendList;
 
     private Button userChange;
+    private Button reportButton;
 
 
 
@@ -79,6 +80,7 @@ public class EditProfileActivity extends AppCompatActivity {
         currentUsername = (TextView) findViewById(R.id.textViewUsername);
         currentEmail = (TextView) findViewById(R.id.textViewEmail);
         currentBio = (TextView) findViewById(R.id.textViewBio);
+
         accessFriendList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
