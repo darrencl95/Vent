@@ -21,6 +21,7 @@
         <item>Notebook</item>
         <item>Notifications</item>
         <item>Settings</item>
+        <item>Waller</item>
     </string-array>
 
     <string name="activity_title_about_us">About Us</string>
@@ -33,5 +34,6 @@
     <string name="title_activity_chatroom">ChatroomActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_post">PostActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

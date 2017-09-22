@@ -7,6 +7,10 @@
             android:icon="@drawable/home48"
             android:title="@string/nav_home" />
         <item
+            android:id="@+id/nav_waller"
+            android:icon="@drawable/waller48"
+            android:title="Waller" />
+        <item
             android:id="@+id/nav_photos"
             android:icon="@drawable/conference48"
             android:title="@string/nav_photos" />
@@ -19,6 +23,7 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings48"
             android:title="@string/nav_settings" />
+
     </group>
 
     <item android:title="Other">

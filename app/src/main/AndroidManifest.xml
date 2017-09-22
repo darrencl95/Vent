@@ -64,16 +64,7 @@
         <activity android:name=".Controller.EditProfileActivity" />
         <activity android:name=".Controller.ChangeUsernameActivity" />
         <activity android:name=".Controller.ChangePasswordActivity" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Controller.PostActivity" />
     </application>
 
 </manifest>

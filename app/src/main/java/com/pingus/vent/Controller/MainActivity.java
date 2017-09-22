@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG_MOVIES = "notebook";
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_SETTINGS = "profile and settings";
+    private static final String TAG_WALLER = "waller";
     public static String CURRENT_TAG = TAG_HOME;
 
     private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
@@ -179,12 +180,10 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 // home
                 HomeFragment homeFragment = new HomeFragment();
-                //Toast.makeText(this,"Going Home 1",Toast.LENGTH_SHORT).show();
                 return homeFragment;
             case 1:
                 // chatroom
                 ChatroomFragment ChatroomFragment = new ChatroomFragment();
-                //Toast.makeText(this,"Going Chat 1",Toast.LENGTH_SHORT).show();
                 return ChatroomFragment;
             case 2:
                 // notebook
@@ -192,12 +191,13 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 // notifications fragment
                 return new NotificationsFragment();
-
             case 4:
                 // settings fragment
                 return new SettingsFragment();
+            case 5:
+                Toast.makeText(this,"Rendering Waller",Toast.LENGTH_LONG).show();
+                return new WallerFragment();
             default:
-                //Toast.makeText(this,"Going Home 2",Toast.LENGTH_SHORT).show();
                 return new HomeFragment();
         }
     }
@@ -250,6 +250,10 @@ public class MainActivity extends AppCompatActivity {
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
+                    case R.id.nav_waller:
+                        navItemIndex = 5;
+                        CURRENT_TAG = TAG_WALLER;
+                        break;
                     case R.id.nav_about_us:
                         // launch new intent instead of loading fragment
                         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
@@ -270,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     menuItem.setChecked(true);
                 }
-                menuItem.setChecked(true);
 
                 loadHomeFragment();
 
