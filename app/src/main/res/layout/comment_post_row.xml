@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true"
+    android:focusable="true"
+    android:paddingBottom="10dp"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/comment_prof_pic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:ignore="ContentDescription"
+        android:layout_alignBottom="@+id/comment_num_likes" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/comment_prof_pic"
+        android:layout_toEndOf="@+id/comment_prof_pic"
+        android:id="@+id/comment_user_name"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/comment_time_stamp"
+        tools:ignore="HardcodedText" />
+
+    <com.like.LikeButton
+        app:icon_type="Star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/comment_prof_pic"
+        android:layout_toRightOf="@+id/comment_prof_pic"
+        android:layout_toLeftOf="@+id/comment_num_likes"
+        app:circle_start_color="@color/colorPrimary"
+        app:like_drawable="@drawable/thumb_on"
+        app:unlike_drawable="@drawable/thumb_off"
+        app:dots_primary_color="@color/colorAccent"
+        app:dots_secondary_color="@color/colorPrimary"
+        app:circle_end_color="@color/colorAccent"
+        app:icon_size="25dp"
+        app:liked="false"
+        app:anim_scale_factor="2"
+        app:is_enabled="true"
+        android:id="@+id/comment_like_button" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/comment_button"
+        android:layout_toRightOf="@+id/comment_user_name"
+        android:layout_toEndOf="@+id/comment_user_name"
+        android:id="@+id/comment_num_likes"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/comment_body"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_below="@+id/comment_user_name"
+        android:layout_toRightOf="@+id/comment_user_name" />
+
+    <TextView
+        android:text="           __________________________________________"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:id="@+id/bold"
+        android:layout_below="@+id/comment_like_button"
+        />
+</RelativeLayout>

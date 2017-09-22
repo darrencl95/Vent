@@ -76,9 +76,7 @@ public class ChatroomActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
         messageList.setAdapter(lvAdapter);
         messageList.setVisibility(View.VISIBLE);
