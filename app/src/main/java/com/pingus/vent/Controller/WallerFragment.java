@@ -103,7 +103,7 @@ public class WallerFragment extends Fragment {
                             Integer.parseInt(shot.child("likes").getValue().toString()),
                             shot.child("comment").getValue().toString(),
                             R.drawable.bg_circle,
-                            Integer.parseInt(shot.child("report").getValue().toString()));
+                            Integer.parseInt(shot.child("reports").getValue().toString()));
                     list.add(post);
                     adapter.notifyDataSetChanged();
                 }
@@ -129,7 +129,7 @@ public class WallerFragment extends Fragment {
     }
 
     public void onPostButton() {
-        Intent intent = new Intent(this.getContext(), PostActivity.class);
+        Intent intent = new Intent(this.getActivity(), PostActivity.class);
         startActivity(intent);
     }
 

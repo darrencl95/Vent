@@ -53,11 +53,11 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(),"Invalid Username or Password",Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!CredentialVerification.verifyEmail(email)) {
-            Toast.makeText(getBaseContext(), "Invalid Email",
-                    Toast.LENGTH_SHORT).show();
-            return;
-        }
+        //if (!CredentialVerification.verifyEmail(email)) {
+        //    Toast.makeText(getBaseContext(), "Invalid Email",
+        //            Toast.LENGTH_SHORT).show();
+        //    return;
+        //}
         String message = CredentialVerification.verifyPassword(password);
         if (!message.isEmpty()) {
             Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
@@ -100,7 +100,6 @@ public class RegistrationActivity extends AppCompatActivity {
                             Log.d("Firebase",task.getException().getMessage().toString());
                             Toast.makeText(getBaseContext(), "Registration failed",
                                     Toast.LENGTH_SHORT).show();
-                            return;
                         }
                     }
                 });

@@ -74,7 +74,7 @@
         android:id="@+id/comment_button"
         android:layout_marginTop="15dp"
         tools:ignore="HardcodedText"
-        android:layout_below="@+id/post_comment"
+        android:layout_below="@+id/post_button"
         android:layout_toRightOf="@+id/num_likes"
         android:layout_toEndOf="@+id/num_likes" />
 
@@ -82,7 +82,7 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/post_comment"
+        android:id="@+id/post_button"
         tools:ignore="HardcodedText,RtlHardcoded"
         android:layout_below="@+id/user_name"
         android:layout_toRightOf="@+id/user_name" />
