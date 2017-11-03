@@ -1,11 +1,9 @@
 package com.pingus.vent.Model;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,9 +13,6 @@ import com.like.LikeButton;
 import com.pingus.vent.R;
 
 import java.util.ArrayList;
-
-import static com.like.view.R.drawable.heart_on;
-import static com.pingus.vent.R.drawable.heart_off;
 
 /**
  * ArrayAdapter for Posts Objects, signals proper placement on layout, etc.
@@ -38,7 +33,7 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
             profilePic = (ImageView) view.findViewById(R.id.prof_pic);
             username = (TextView) view.findViewById(R.id.user_name);
             timestamp = (TextView) view.findViewById(R.id.time_stamp);
-            postComment = (TextView) view.findViewById(R.id.post_comment);
+            postComment = (TextView) view.findViewById(R.id.post_button);
             numLikes = (TextView) view.findViewById(R.id.num_likes);
             likeButton = (LikeButton) view.findViewById(R.id.like_button);
             commentButton = (Button) view.findViewById(R.id.comment_button);
