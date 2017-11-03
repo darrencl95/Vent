@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.pingus.vent.R;
 
 import android.view.View;
@@ -31,6 +33,8 @@ public class ChangeUsernameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_username);
         entry = (EditText) findViewById(R.id.userEntry);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
         confirmEntry = (EditText) findViewById(R.id.confirmEntry);
 
 
@@ -45,22 +49,17 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(),"Sorry, Fields Do Not Match",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                changeUsername(entered);
+                FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("userName").setValue(entered);
+ 
                 startActivity(intent);
             }
         });
 
 
 
+
+
     }
 
-    /**
-     * Helper function to change the username
-     * @param username to be changed to
-     */
-    public void changeUsername(String username) {
-        //database.getRoot().child("users").child(user.getUid()).child("userName").setValue(username);
-        //currentUsername = (TextView) findViewById(R.id.currentUsername);
-       // currentUsername.setText(username);
-    }
+
 }

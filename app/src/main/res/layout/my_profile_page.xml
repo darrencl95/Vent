@@ -65,7 +65,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/textView3"
+                                android:id="@+id/usernameLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Username"
@@ -79,12 +79,12 @@
                                 android:text="A sentence or two about myself"
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
+
                             <Button
-                                android:id="@+id/button2"
+                                android:id="@+id/editProfileButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Edit Profile"
-                                />
+                                android:text="Edit Profile" />
                         </LinearLayout>
                     </LinearLayout>
 

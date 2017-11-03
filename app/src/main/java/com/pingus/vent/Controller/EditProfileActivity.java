@@ -103,9 +103,10 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }) ;
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user.getDisplayName() != null) {
-            currentUsername.setText(user.getDisplayName());
-        }
+
+        System.out.println(user.getDisplayName());
+        currentUsername.setText(user.getDisplayName());
+
         currentEmail.setText(user.getEmail());
         //TODO set up the bio page in the database
         //currentBio.setText(user.getBio());

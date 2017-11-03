@@ -68,9 +68,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_profile_page);
         profPic = (ImageView) findViewById(R.id.ivUserProfilePhoto);
-        userName = (TextView) findViewById(R.id.textView3);
-        bio = (TextView) findViewById(R.id.textView6);
-        editProfile = (Button) findViewById(R.id.button2);
+        userName = (TextView) findViewById(R.id.usernameLabel);
+        bio = (TextView) findViewById(R.id.myBio);
+        editProfile = (Button) findViewById(R.id.editProfileButton);
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,8 +80,9 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }) ;
         user = FirebaseAuth.getInstance().getCurrentUser();
+        String currentUser = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("userName").toString();
         if(user.getDisplayName() != null) {
-            userName.setText(user.getDisplayName());
+            userName.setText(currentUser);
         }
     }
 

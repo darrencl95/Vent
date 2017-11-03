@@ -26,8 +26,8 @@ public class EditBio extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.biochange);
-        biodescription = findViewById(R.id.myBio);
-        confirm_button = (Button) findViewById(R.id.biochange);
+        biodescription = (EditText) findViewById(R.id.entry_bio);
+        confirm_button = (Button) findViewById(R.id.confirmBioChangeButton);
 
         confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +47,7 @@ public class EditBio extends AppCompatActivity {
         //set the user's bio to the new bio requested
         //1. access the user's current bio
         //2. change it with the text written by the user
+        biodescription.setText(bio_text);
 
     }
 }
