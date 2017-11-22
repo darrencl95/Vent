@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,7 @@ public class WallerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        final String packageName = this.getContext().getPackageName();
         database = FirebaseDatabase.getInstance().getReference().child("wallpost");
         View view = inflater.inflate(R.layout.fragment_waller, container, false);
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.recyclerview);
@@ -92,6 +94,7 @@ public class WallerFragment extends Fragment {
         });
         final ArrayList<Post> list = new ArrayList<>();
         final PostsArrayAdapter adapter = new PostsArrayAdapter(list);
+        Log.d("PACKAGE NAME", packageName);
         //Get posts from database
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,7 +105,7 @@ public class WallerFragment extends Fragment {
                             shot.child("timestamp").getValue().toString(),
                             Integer.parseInt(shot.child("likes").getValue().toString()),
                             shot.child("comment").getValue().toString(),
-                            R.drawable.bg_circle,
+                            getResources().getIdentifier("prof_" + shot.child("prof_pic").getValue().toString(), "drawable", packageName),
                             Integer.parseInt(shot.child("reports").getValue().toString()));
                     list.add(post);
                     adapter.notifyDataSetChanged();
@@ -136,12 +139,6 @@ public class WallerFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override

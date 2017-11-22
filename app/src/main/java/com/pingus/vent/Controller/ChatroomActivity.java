@@ -70,7 +70,7 @@ public class ChatroomActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = (String) dataSnapshot.getValue();
                 if (userName == null) {
-                    database.getRoot().child("users").child(user.getUid()).setValue(new User("no_username"));
+                    database.getRoot().child("users").child(user.getUid()).setValue(new User("no_username", "no_displayname"));
                 }
                 lvAdapter.notifyDataSetChanged();
             }

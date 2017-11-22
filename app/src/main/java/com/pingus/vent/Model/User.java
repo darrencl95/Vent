@@ -9,28 +9,36 @@ public class User {
 
     // implement user image
     private String userName;
-    private String imagePath;
+    private Integer imagePath;
+    private String displayName;
     public User() {
 
     }
-    public User(String userName) {
+    public User(String userName, String displayName) {
         this.userName = userName;
-        imagePath = "";
+        this.displayName = displayName;
+        imagePath = 0;
     }
 
     /**
      * Gets the username of the user
-     * @return String the name of the user
+     * @return String the username of the user
      */
     public String getUserName() {
         return userName;
     }
 
     /**
+     * Gets the display name of the user
+     * @return String the display name of the user
+     */
+    public String getDisplayName() {return displayName;}
+
+    /**
      * Gets the image path of the user profile
      * @return the image path in String
      */
-    public String getImagePath() {
+    public Integer getImagePath() {
         return imagePath;
     }
 
@@ -38,7 +46,7 @@ public class User {
      * Sets the image path
      * @param path the path to the image
      */
-    public void setImagePath(String path) {
+    public void setImagePath(Integer path) {
         imagePath = path;
     }
 }

@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference database;
     private FirebaseUser user;
     private String name;
+    private Integer profile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +41,18 @@ public class PostActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         user = FirebaseAuth.getInstance().getCurrentUser();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot shot : dataSnapshot.getChildren()) {
-                    if(shot.getKey().equals("userName")) {
+                    if(shot.getKey().equals("displayName")) {
                         name = shot.getValue().toString();
+                    }
+                    if(shot.getKey().equals("imagePath")) {
+                        Long temp = (Long) shot.getValue();
+                        profile = temp.intValue();
                     }
                 }
             }
@@ -62,8 +69,7 @@ public class PostActivity extends AppCompatActivity {
                 //TODO: Post new comment to database
                 Long tsLong = System.currentTimeMillis()/1000;
                 String ts = tsLong.toString();
-                System.out.println(name);
-                Post post = new Post(generateID(), name, ts, 0, text.getText().toString(), 1, 0);
+                Post post = new Post(generateID(), name, ts, 0, text.getText().toString(), profile, 0);
                 database.push().setValue(post);
             }
         });

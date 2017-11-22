@@ -195,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
                 // settings fragment
                 return new SettingsFragment();
             case 5:
-                Toast.makeText(this,"Rendering Waller",Toast.LENGTH_LONG).show();
                 return new WallerFragment();
             default:
                 return new HomeFragment();

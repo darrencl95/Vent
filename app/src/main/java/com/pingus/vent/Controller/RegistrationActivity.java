@@ -25,6 +25,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextPassword2;
     private EditText editTextUsername;
+    private EditText editTextDisplayName;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
 
@@ -36,6 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextPassword2 = (EditText) findViewById(R.id.editTextPassword2);
         editTextUsername = (EditText) findViewById(R.id.editTextUsername);
+        editTextDisplayName = (EditText) findViewById(R.id.editTextDisplayName);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -49,6 +51,7 @@ public class RegistrationActivity extends AppCompatActivity {
     public void register(View view) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString();
+        String displayName = editTextDisplayName.getText().toString();
         if(email.equals("") || password.equals("")) {
             Toast.makeText(getBaseContext(),"Invalid Username or Password",Toast.LENGTH_SHORT).show();
             return;
@@ -72,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Username too short", Toast.LENGTH_SHORT).show();
             return;
         }
-        createAccount(email, password);
+        createAccount(email, password, displayName);
     }
 
     /**
@@ -80,7 +83,7 @@ public class RegistrationActivity extends AppCompatActivity {
      * @param email the email of the new account
      * @param password the password of the new account
      */
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password, final String displayName) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -90,7 +93,8 @@ public class RegistrationActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if (user != null) {
                                 DatabaseReference myRef = database.getInstance().getReference();
-                                User u = new User(editTextUsername.getText().toString().trim());
+                                User u = new User(editTextUsername.getText().toString().trim(), displayName);
+
                                 myRef.child("users").child(user.getUid()).setValue(u);
                             }
                             Toast.makeText(getBaseContext(), "Registration succeeded",

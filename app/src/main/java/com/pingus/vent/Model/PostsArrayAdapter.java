@@ -1,6 +1,7 @@
 package com.pingus.vent.Model;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,14 @@ import android.widget.TextView;
 
 import com.like.IconType;
 import com.like.LikeButton;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.pingus.vent.R;
 
 import java.util.ArrayList;
 
 /**
  * ArrayAdapter for Posts Objects, signals proper placement on layout, etc.
- * Created by smant on 6/27/2017.
+ * Created by Shantanu Mantri on 6/27/2017.
  */
 
 public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.MyViewHolder> {
@@ -24,16 +26,16 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView username, timestamp, postComment, numLikes, bold;
-        public ImageView profilePic;
+        public CircularImageView profilePic;
         public Button commentButton;
         public LikeButton likeButton;
 
         public MyViewHolder(View view) {
             super(view);
-            profilePic = (ImageView) view.findViewById(R.id.prof_pic);
+            profilePic = (com.mikhaellopez.circularimageview.CircularImageView) view.findViewById(R.id.prof_pic);
             username = (TextView) view.findViewById(R.id.user_name);
             timestamp = (TextView) view.findViewById(R.id.time_stamp);
-            postComment = (TextView) view.findViewById(R.id.post_button);
+            postComment = (TextView) view.findViewById(R.id.comment_body);
             numLikes = (TextView) view.findViewById(R.id.num_likes);
             likeButton = (LikeButton) view.findViewById(R.id.like_button);
             commentButton = (Button) view.findViewById(R.id.comment_button);
@@ -56,6 +58,7 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Post currentPost = postList.get(position);
+
         holder.profilePic.setImageResource(currentPost.getProf_pic());
 
         holder.username.setText(currentPost.getUsername());

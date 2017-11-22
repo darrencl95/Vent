@@ -10,7 +10,7 @@
     </style>
 
     <style name="LightDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="colorAccent">#C1F9A2</item>
         <item name="buttonBarButtonStyle">@style/DialogButtonStyle</item>
     </style>
