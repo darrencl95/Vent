@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.pingus.vent.Model.Post;
 import com.pingus.vent.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 public class PostActivity extends AppCompatActivity {
@@ -67,9 +70,10 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: Post new comment to database
-                Long tsLong = System.currentTimeMillis()/1000;
-                String ts = tsLong.toString();
-                Post post = new Post(generateID(), name, ts, 0, text.getText().toString(), profile, 0);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                String timestamp = dateFormat.format(date);
+                Post post = new Post(generateID(), name, timestamp, 0, text.getText().toString(), profile, 0);
                 database.push().setValue(post);
             }
         });

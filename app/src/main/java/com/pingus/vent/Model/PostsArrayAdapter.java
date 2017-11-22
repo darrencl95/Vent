@@ -8,13 +8,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.like.IconType;
 import com.like.LikeButton;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.pingus.vent.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 /**
  * ArrayAdapter for Posts Objects, signals proper placement on layout, etc.
@@ -29,6 +40,7 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
         public CircularImageView profilePic;
         public Button commentButton;
         public LikeButton likeButton;
+        private String currentUserDisplayName;
 
         public MyViewHolder(View view) {
             super(view);
@@ -40,6 +52,7 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
             likeButton = (LikeButton) view.findViewById(R.id.like_button);
             commentButton = (Button) view.findViewById(R.id.comment_button);
             bold = (TextView) view.findViewById(R.id.bold);
+            currentUserDisplayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         }
     }
 
@@ -58,7 +71,7 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Post currentPost = postList.get(position);
-
+        final String currentID = currentPost.getId();
         holder.profilePic.setImageResource(currentPost.getProf_pic());
 
         holder.username.setText(currentPost.getUsername());
@@ -70,6 +83,7 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
         final LikeButton liker = holder.likeButton;
         final Button commenter = holder.commentButton;
         final TextView numLikes = holder.numLikes;
+        final String from_user = holder.currentUserDisplayName;
         liker.setIcon(IconType.Heart);
         numLikes.setText(String.valueOf(currentPost.getLikes()));
 
@@ -79,11 +93,73 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
                 if(liker.isLiked()) {
                     liker.setLiked(false);
                     numLikes.setText(String.valueOf(currentPost.getLikes()));
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wallpost");
                     //TODO Access database to change value
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot shot : dataSnapshot.getChildren()) {
+                                if(shot.getKey().equals(currentID)) {
+                                    int likes = (Integer) shot.child("likes").getValue();
+                                    likes--;
+                                    shot.child("likes").getRef().setValue(likes);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    final DatabaseReference newref = FirebaseDatabase.getInstance().getReference().child("notifications");
+                    newref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot shot : dataSnapshot.getChildren()) {
+                                if(shot.child("post_id").equals(currentID)) {
+                                    //delete this reference
+                                    String id = shot.getKey();
+                                    newref.child(id).removeValue();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    //TODO Access database to kill notification
+
                 } else {
                     liker.setLiked(true);
                     numLikes.setText(String.valueOf(currentPost.getLikes() + 1));
                     //TODO Access database to change value
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wallpost");
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot shot : dataSnapshot.getChildren()) {
+                                if(shot.getKey().equals(currentID)) {
+                                    int likes = (Integer) shot.child("likes").getValue();
+                                    likes++;
+                                    shot.child("likes").getRef().setValue(likes);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {}
+                    });
+                    //Access database to add notification
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
+                    String timestamp = dateFormat.format(date);
+                    String id = generateID();
+                    DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("notifications");
+                    Notification not = new Notification(id, currentPost.getUsername(), from_user, true, "", timestamp, currentID);
+                    database.push().setValue(not);
                 }
             }
         });
@@ -99,5 +175,10 @@ public class PostsArrayAdapter  extends RecyclerView.Adapter<PostsArrayAdapter.M
     @Override
     public int getItemCount() {
         return postList.size();
+    }
+
+    public static String generateID() {
+        String uniqueID = UUID.randomUUID().toString();
+        return uniqueID;
     }
 }
